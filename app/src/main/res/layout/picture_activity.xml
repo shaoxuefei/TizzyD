@@ -16,4 +16,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/picImage"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/muchSelectPicture"
+        android:text="muchSelectPicture"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultTxt"
+        />
 </LinearLayout>

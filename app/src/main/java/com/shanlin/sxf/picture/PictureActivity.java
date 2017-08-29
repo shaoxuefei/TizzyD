@@ -1,4 +1,4 @@
-package com.shanlin.sxf;
+package com.shanlin.sxf.picture;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -18,6 +18,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.shanlin.sxf.R;
+import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
+import com.zfdang.multiple_images_selector.SelectorSettings;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,30 +30,55 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by Sxf on 2017/8/28.
  */
 
 public class PictureActivity extends AppCompatActivity {
-    private Button pictureAll;
+    private Button pictureAll,muchSelectPicture;
     private ImageView picImage;
     private int PICTURE_REQUEST = 0x21;
-
+    private int MUCH_PICTURE_CODE =0x31;
+    private ArrayList<String> mResults = new ArrayList<>();
+    private TextView resultTxt;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picture_activity);
         initView();
+
+        String string = getResources().getString(R.string.type_txt);
+        resultTxt.setText(String.format(string,"苹果本",124.23,20));
     }
 
     public void initView() {
         pictureAll = (Button) findViewById(R.id.pictureAllButton);
         picImage = (ImageView) findViewById(R.id.picImage);
+        muchSelectPicture= (Button) findViewById(R.id.muchSelectPicture);
+        resultTxt= (TextView) findViewById(R.id.resultTxt);
         pictureAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 turnToPicture();
+            }
+        });
+        muchSelectPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start multiple photos selector
+                Intent intent = new Intent(PictureActivity.this, ImagesSelectorActivity.class);
+                // max number of images to be selected
+                intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
+                // min size of image which will be shown; to filter tiny images (mainly icons)
+                intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
+                // show camera or not
+                intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
+                // pass current selected images as the initial value
+                intent.putStringArrayListExtra(SelectorSettings.SELECTOR_INITIAL_SELECTED_LIST, mResults);
+                // start the selector
+                startActivityForResult(intent, MUCH_PICTURE_CODE);
             }
         });
     }
@@ -90,6 +120,15 @@ public class PictureActivity extends AppCompatActivity {
                 Bitmap bitmap1 = roateBitmapByDgree(bitmap, getBitmapDegress(fileFromMediaUri.getAbsolutePath()));
                 picImage.setImageBitmap(bitmap1);
             }
+        }else if(requestCode==MUCH_PICTURE_CODE&&resultCode==RESULT_OK){
+            mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
+            for(String result : mResults) {
+                sb.append(result).append("\n");
+            }
+            resultTxt.setText(sb.toString());
         }
     }
 

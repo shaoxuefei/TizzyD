@@ -3,11 +3,9 @@ package com.shanlin.sxf;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,11 +17,10 @@ import com.shanlin.sxf.api.ApiModule;
 import com.shanlin.sxf.diyview.TreasureViewActivity;
 import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
+import com.shanlin.sxf.picture.PictureActivity;
 import com.slfinance.facesdk.ui.IDCardScanActivity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 

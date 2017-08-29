@@ -44,4 +44,5 @@ dependencies {
     compile files('libs/deviceid_1.0.jar')
     compile 'org.json:json:20160810'
     compile 'com.alibaba:fastjson:1.2.32'
+    compile project(':multiple-images-selector')
 }
