@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/txt_apdid_token"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Hello World!"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/btn_gen_apdid"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/txt_apdid_token"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:layout_height="30dp"
+        android:text="点击获取设备签名" />
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/btn_gen_apdid"
+        android:background="@color/colorAccent"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="70dp"
+            android:layout_height="100dp">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:text="HelloWorld"
+                android:textSize="18sp" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/circle" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/colorAccent"
+        android:visibility="gone" />
+</LinearLayout>
