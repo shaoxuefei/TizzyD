@@ -20,7 +20,11 @@ import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
 import com.slfinance.facesdk.ui.IDCardScanActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button,button2,button3,button4,button5,treasureView,gsonButton,request,picture;
     private LinearLayout linearRoot;
     private ScrollView scrollView;
+    private String string;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         initContentView();
+
     }
 
     private ImageView image;

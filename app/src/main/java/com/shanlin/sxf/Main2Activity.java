@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private EditText editText;
     private TextInputLayout textInputLayout;
     private FloatingActionButton floatButton;
+    private Button collection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView(){
+        collection= (Button) findViewById(R.id.collection);
         textInputLayout= (TextInputLayout) findViewById(R.id.textInputLayout);
         snackbar_text= (TextView) findViewById(R.id.snackbar_text);
         editInputText= (TextInputEditText) findViewById(R.id.editInputText);
@@ -34,6 +37,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         floatButton= (FloatingActionButton) findViewById(R.id.floatButton);
         floatButton.setOnClickListener(this);
         snackbar_text.setOnClickListener(this);
+        collection.setOnClickListener(this);
         EditText editText = textInputLayout.getEditText();
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,6 +72,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 public void onClick(View v) {
                     Snackbar.make(snackbar_text,"Action",Snackbar.LENGTH_SHORT).show();
                 }
+
+
             }).show();
         }else if(id==R.id.floatButton){
             Snackbar.make(floatButton,"FloatActionButton",Snackbar.LENGTH_SHORT).setAction("Intent", new View.OnClickListener() {
@@ -77,6 +83,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     startActivity(intent);
                 }
             }).show();
+        }else if(id==R.id.collection){
+            new Miss().useCollection();
         }
     }
 

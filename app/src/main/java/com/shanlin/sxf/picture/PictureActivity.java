@@ -168,6 +168,9 @@ public class PictureActivity extends AppCompatActivity {
 
     //对图片的大小进行压缩
     public Bitmap compressionSizePicture(Uri uri) {
+
+
+
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -220,7 +223,7 @@ public class PictureActivity extends AppCompatActivity {
         }
         ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         Bitmap bitmap1 = BitmapFactory.decodeStream(inputStream, null, null);
-        Log.e("aa","压缩后的byte长度"+outputStream.toByteArray().length);
+        Log.e("aa","亚索后的byte长度"+outputStream.toByteArray().length);
         return bitmap1;
     }
 
@@ -233,6 +236,7 @@ public class PictureActivity extends AppCompatActivity {
             int attributeInt = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch (attributeInt) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
+
                     degress = 90;
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_180:
