@@ -61,6 +61,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_below="@+id/linear"
+        android:id="@+id/linearOne"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
@@ -71,5 +72,39 @@
             android:id="@+id/collection"
             />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/intentService"
+            android:text="IntentService"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/service"
+            android:text="service"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/linearOne"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="有序广播"
+            android:id="@+id/orderBroadCast"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/broadCast"
+            android:text="无序广播"
+            />
     </LinearLayout>
 </RelativeLayout>

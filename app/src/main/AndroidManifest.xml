@@ -49,6 +49,22 @@
         <activity android:name=".picture.PictureActivity"
             android:screenOrientation="portrait"
             />
+        <service android:name=".service.MyIntentService"
+
+            />
+        <service android:name=".service.MyService"/>
+        <!--priority 范围：-1000~1000 广播接受优先级-->
+        <receiver android:name=".broadcast.MyBroadCastReceive">
+            <intent-filter android:priority="500">
+                <action android:name="com.myBrocaCast"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".broadcast.MyBroadCastBReceive">
+            <intent-filter android:priority="100">
+                <action android:name="com.myBrocaCast"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

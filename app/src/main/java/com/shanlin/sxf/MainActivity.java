@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.shanlin.sxf.api.ApiModule;
@@ -43,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null) {
+            String saveId = savedInstanceState.getString("saveId");
+            if (!TextUtils.isEmpty(saveId)) {
+                Toast.makeText(this, saveId, Toast.LENGTH_SHORT).show();
+            }
+        }
         setContentView(R.layout.activity_main);
         linearRoot= (LinearLayout) findViewById(R.id.linearRoot);
         button= (Button) findViewById(R.id.button);
@@ -180,6 +190,14 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //子线程startActivity()需要开启个新栈，防止跟主线程activity冲突
+                startService(new Intent());//service默认是运行在mainThread 中
+            }
+        });
     }
 
     public void turnToPicture(){
@@ -188,5 +206,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Bundle bundle=new Bundle();
+        bundle.putString("saveId","HelloWorld");
+        onSaveInstanceState(bundle);
+    }
+    //Activity-不会主动调用--需要手动调用--一般在onPause()之前调用
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.e("aa","onSaveInstance-Activity");
+    }
+    //AppCompatActivity
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e("aa","onSaveInstance_AppCompatActivity");
+    }
 }
