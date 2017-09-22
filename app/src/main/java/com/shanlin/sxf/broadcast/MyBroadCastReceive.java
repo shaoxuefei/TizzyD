@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 /**
  * Created by Sxf on 2017/9/20.
+ * 生命周期太短--在接收到广播的时候 开始创建，然后在onReceive()方法结束的时候 销毁，故不建议在onReceive()中做耗时操作或者是newThread();
  */
 
 public class MyBroadCastReceive extends BroadcastReceiver{

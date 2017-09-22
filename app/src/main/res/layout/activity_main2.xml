@@ -57,10 +57,13 @@
         android:layout_margin="10dp"
         />
     </android.support.design.widget.CoordinatorLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_below="@+id/linear"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:id="@+id/linearOne"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
@@ -89,7 +92,6 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/linearOne"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
@@ -106,5 +108,24 @@
             android:id="@+id/broadCast"
             android:text="无序广播"
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Handler"
+            android:id="@+id/thread"
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HandlerThread"
+                android:id="@+id/handlerThread"
+                />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

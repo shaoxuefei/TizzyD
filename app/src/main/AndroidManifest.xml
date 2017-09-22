@@ -60,11 +60,11 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".broadcast.MyBroadCastBReceive">
-            <intent-filter android:priority="100">
-                <action android:name="com.myBrocaCast"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name=".broadcast.MyBroadCastBReceive">-->
+            <!--<intent-filter android:priority="100">-->
+                <!--<action android:name="com.myBrocaCast"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>
