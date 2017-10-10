@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shanlin.sxf">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -17,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.shanlin.sxf.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,45 +28,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.shanlin.sxf.Main2Activity"
+            android:name=".Main2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.shanlin.sxf.Main3Activity" />
-        <activity android:name="com.shanlin.sxf.Main4Activity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.shanlin.sxf.paint.PaintActivity"
-            android:screenOrientation="landscape"
-            />
-        <activity android:name="com.shanlin.sxf.SingerActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.shanlin.sxf.SeekBarActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.shanlin.sxf.PopubWindowActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.shanlin.sxf.diyview.TreasureViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.shanlin.sxf.gson.GsonActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".picture.PictureActivity"
-            android:screenOrientation="portrait"
-            />
-        <service android:name=".service.MyIntentService"
+        <activity android:name=".Main3Activity" />
+        <activity
+            android:name=".Main4Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".paint.PaintActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".SingerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeekBarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PopubWindowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".diyview.TreasureViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".gson.GsonActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".picture.PictureActivity"
+            android:screenOrientation="portrait" />
 
-            />
-        <service android:name=".service.MyService"/>
-        <!--priority 范围：-1000~1000 广播接受优先级-->
+        <service android:name=".service.MyIntentService" />
+        <service android:name=".service.MyService" />
+        <!-- priority 范围：-1000~1000 广播接受优先级 -->
         <receiver android:name=".broadcast.MyBroadCastReceive">
             <intent-filter android:priority="500">
-                <action android:name="com.myBrocaCast"/>
+                <action android:name="com.myBrocaCast" />
             </intent-filter>
         </receiver>
 
-        <!--<receiver android:name=".broadcast.MyBroadCastBReceive">-->
-            <!--<intent-filter android:priority="100">-->
-                <!--<action android:name="com.myBrocaCast"/>-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <!-- <receiver android:name=".broadcast.MyBroadCastBReceive"> -->
+        <!-- <intent-filter android:priority="100"> -->
+        <!-- <action android:name="com.myBrocaCast"/> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <activity android:name=".fragment.MFragmentActivity"></activity>
     </application>
 
 </manifest>

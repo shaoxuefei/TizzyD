@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shanlin.sxf.fragment.MFragmentActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_above="@+id/linTab"
+        android:id="@+id/mFrameLayout"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:id="@+id/linTab"
+        android:layout_alignParentBottom="true"
+        android:layout_height="50dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="首页"
+            android:id="@+id/mTab01"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/mTab02"
+            android:layout_marginRight="10dp"
+            android:text="论坛"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/mTab03"
+            android:text="个人中心"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</RelativeLayout>

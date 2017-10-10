@@ -223,6 +223,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         overridePendingTransition(0,R.anim.enter_out_anim);
         myHandler.removeCallbacksAndMessages(null);//清楚Handler以HandlerMessage()回调方式创建的Handler--Message信息
         handler.removeCallbacks(myRunable);//清楚Handler 以Post(Runable)--方式放的post回调
-        thread.stop();//一般会用HandlerThread来处理线程和其回调，，handler.removeCallbacks(myRunable)：
+        if(thread!=null&&thread.isAlive()) {
+            thread.stop();//一般会用HandlerThread来处理线程和其回调，，handler.removeCallbacks(myRunable)：
+        }
     }
 }

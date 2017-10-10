@@ -111,6 +111,19 @@
             android:text="picture"
             />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/linearThree"
+        android:layout_below="@+id/linearSecond"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/btnFragment"
+            android:layout_marginLeft="10dp"
+            android:text="Fragment"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
