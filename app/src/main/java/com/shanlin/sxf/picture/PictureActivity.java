@@ -168,9 +168,6 @@ public class PictureActivity extends AppCompatActivity {
 
     //对图片的大小进行压缩
     public Bitmap compressionSizePicture(Uri uri) {
-
-
-
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
             BitmapFactory.Options options = new BitmapFactory.Options();

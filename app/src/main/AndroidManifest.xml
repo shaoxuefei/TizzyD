@@ -70,7 +70,8 @@
         <!-- <action android:name="com.myBrocaCast"/> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
-        <activity android:name=".fragment.MFragmentActivity"></activity>
+        <activity android:name=".fragment.MFragmentActivity" />
+        <activity android:name=".MyViewActivity"></activity>
     </application>
 
 </manifest>

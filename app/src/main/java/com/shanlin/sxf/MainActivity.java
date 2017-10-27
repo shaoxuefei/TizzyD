@@ -40,7 +40,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button,button2,button3,button4,button5,treasureView,gsonButton,request,picture;
+    private Button button,button2,button3,button4,button5,treasureView,gsonButton,request,picture,myView;
     private LinearLayout linearRoot;
     private ScrollView scrollView;
     private String string;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         scrollView= (ScrollView) findViewById(R.id.scrollView);
         treasureView= (Button) findViewById(R.id.treasureView);
         picture= (Button) findViewById(R.id.picture);
+        myView= (Button) findViewById(R.id.btnMyView);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +128,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 turnToPicture();
+            }
+        });
+
+        myView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,MyViewActivity.class);
+                startActivity(intent);
             }
         });
         initContentView();
