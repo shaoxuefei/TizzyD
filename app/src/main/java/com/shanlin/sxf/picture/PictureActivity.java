@@ -37,12 +37,14 @@ import java.util.ArrayList;
  */
 
 public class PictureActivity extends AppCompatActivity {
-    private Button pictureAll,muchSelectPicture;
+    private Button pictureAll, muchSelectPicture, tackPicture;
     private ImageView picImage;
     private int PICTURE_REQUEST = 0x21;
-    private int MUCH_PICTURE_CODE =0x31;
+    private int MUCH_PICTURE_CODE = 0x31;
+    private int TAKE_CAMERA_REQUESTCODE = 0x41;
     private ArrayList<String> mResults = new ArrayList<>();
     private TextView resultTxt;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +52,15 @@ public class PictureActivity extends AppCompatActivity {
         initView();
 
         String string = getResources().getString(R.string.type_txt);
-        resultTxt.setText(String.format(string,"苹果本",124.23,20));
+        resultTxt.setText(String.format(string, "苹果本", 124.23, 20));
     }
 
     public void initView() {
+        tackPicture = (Button) findViewById(R.id.tackPicture);
         pictureAll = (Button) findViewById(R.id.pictureAllButton);
         picImage = (ImageView) findViewById(R.id.picImage);
-        muchSelectPicture= (Button) findViewById(R.id.muchSelectPicture);
-        resultTxt= (TextView) findViewById(R.id.resultTxt);
+        muchSelectPicture = (Button) findViewById(R.id.muchSelectPicture);
+        resultTxt = (TextView) findViewById(R.id.resultTxt);
         pictureAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,22 +84,36 @@ public class PictureActivity extends AppCompatActivity {
                 startActivityForResult(intent, MUCH_PICTURE_CODE);
             }
         });
+
+        tackPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tackCamera();
+            }
+        });
     }
 
+    //拍照
+    public void tackCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, TAKE_CAMERA_REQUESTCODE);
+    }
+
+    //调用系统相册
     public void turnToPicture() {
-        //调用系统相册
         Intent intent;
-        if(Build.VERSION.SDK_INT<19) {
+        if (Build.VERSION.SDK_INT < 19) {
             //这种在大于19sdk中直接是打开的全部文件不只是图库
             intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
-        }else {
+        } else {
             //Uri:MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        startActivityForResult(intent,PICTURE_REQUEST);
+        startActivityForResult(intent, PICTURE_REQUEST);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,9 +126,9 @@ public class PictureActivity extends AppCompatActivity {
             try {
                 InputStream inputStream = contentResolver.openInputStream(fromFile);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-                Log.e("aa","压缩前byte长度"+byteArrayOutputStream.toByteArray().length);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                Log.e("aa", "压缩前byte长度" + byteArrayOutputStream.toByteArray().length);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -120,15 +137,23 @@ public class PictureActivity extends AppCompatActivity {
                 Bitmap bitmap1 = roateBitmapByDgree(bitmap, getBitmapDegress(fileFromMediaUri.getAbsolutePath()));
                 picImage.setImageBitmap(bitmap1);
             }
-        }else if(requestCode==MUCH_PICTURE_CODE&&resultCode==RESULT_OK){
+        } else if (requestCode == MUCH_PICTURE_CODE && resultCode == RESULT_OK) {
             mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
 
             StringBuilder sb = new StringBuilder();
             sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
-            for(String result : mResults) {
+            for (String result : mResults) {
                 sb.append(result).append("\n");
             }
             resultTxt.setText(sb.toString());
+        } else if (requestCode == TAKE_CAMERA_REQUESTCODE) {
+            if (data != null) {
+                Bundle extras = data.getExtras();
+                if (extras != null && extras.get("data") != null) {
+                    Bitmap cameraBitmap = (Bitmap) extras.get("data");
+                    picImage.setImageBitmap(cameraBitmap);
+                }
+            }
         }
     }
 
@@ -220,7 +245,7 @@ public class PictureActivity extends AppCompatActivity {
         }
         ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         Bitmap bitmap1 = BitmapFactory.decodeStream(inputStream, null, null);
-        Log.e("aa","亚索后的byte长度"+outputStream.toByteArray().length);
+        Log.e("aa", "亚索后的byte长度" + outputStream.toByteArray().length);
         return bitmap1;
     }
 

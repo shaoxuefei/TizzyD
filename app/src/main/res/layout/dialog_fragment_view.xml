@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#999999"
+            android:gravity="center"
+            android:text="法师￥200"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_item2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#999999"
+            android:gravity="center"
+            android:text="战士￥300"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_item3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#999999"
+            android:gravity="center"
+            android:text="射手￥100"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

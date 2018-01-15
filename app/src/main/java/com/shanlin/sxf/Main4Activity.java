@@ -33,37 +33,11 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class Main4Activity extends AppCompatActivity {
-    private NavigationView navigation_view;
-    private DrawerLayout drawerLayout;
-    private MenuItem lastItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
-        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                CharSequence title = item.getTitle();
-                if (lastItem != null) {
-                    lastItem.setChecked(false);
-                }
-                item.setChecked(true);
-                lastItem = item;
-                Snackbar.make(navigation_view, title, Snackbar.LENGTH_SHORT).setAction("Open", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        drawerLayout.openDrawer(navigation_view);
-                    }
-                }).show();
-                drawerLayout.closeDrawers();
-
-
-                return false;
-            }
-        });
     }
 
     public void loadData() {
@@ -168,7 +142,31 @@ public class Main4Activity extends AppCompatActivity {
             public void call(String s) {
 
             }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
         });
+
+        observable.subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        });
+
+
         //相当于执行了subscriber.onNext（one\two\three）的方法--就是一个事件列表（OnSubscribe）
         //just--会一步一步执行回调(例如for循环)
         Observable<String> observable1 = Observable.just("0ne", "two", "three");
@@ -180,6 +178,8 @@ public class Main4Activity extends AppCompatActivity {
         //顾取消订阅是观察者取消--也就是Observer--Subscriber--Subscription
         Subscription subscription = subscriber;
         subscription.unsubscribe();
+        
+
         /**
          * map--String
          */
@@ -242,7 +242,7 @@ public class Main4Activity extends AppCompatActivity {
                     @Override
                     public Observable<JsonObject> call(String s) {
                         int params = Integer.parseInt(s);
-                        HashMap<String, String> map = new HashMap<String, String>();
+                        HashMap<String, String> map = new HashMap<>();
                         return ApiModule.getInstance().getApiUrl().getUserInfo(map);
                     }
                 }).subscribe(new Action1<JsonObject>() {
@@ -254,11 +254,12 @@ public class Main4Activity extends AppCompatActivity {
     }
 
     private Subscription subscription1;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //取消订阅--不可直接写在.subscribe().后边，这样会直接取消订阅走不到回调方法
-        if(subscription1.isUnsubscribed()){
+        if (subscription1.isUnsubscribed()) {
             subscription1.unsubscribe();
         }
 

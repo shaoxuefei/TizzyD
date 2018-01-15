@@ -4,8 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="blackColor">#000000</color>
-    <color name="seekBarDefaule">#666666</color>
-    <color name="seekBarPress">#99666666</color>
     <color name="white">#ffffff</color>
     <color name="gray">#333333</color>
     <color name="backroud">#FF6F12</color>

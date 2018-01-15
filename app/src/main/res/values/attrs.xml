@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="myViewTextSize" format="dimension" />
+    <declare-styleable name="MyView">
+        <attr name="myViewText" format="string" />
+        <attr name="myViewTextColor" format="color" />
+        <attr name="myViewTextSize" />
+    </declare-styleable>
+
+    <declare-styleable name="MyViewGroup">
+        <attr name="horna" format="dimension" />
+        <attr name="vertica" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="MyDiyImageView">
+        <attr name="lineColor" format="color" />
+        <attr name="areaBgColor" format="color" />
+        <attr name="lineApha" format="integer" />
+        <attr name="areaBgApha" format="integer" />
+    </declare-styleable>
+
+</resources>

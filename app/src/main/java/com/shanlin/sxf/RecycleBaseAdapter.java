@@ -25,7 +25,9 @@ public class RecycleBaseAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_view, null);
-        //ItemView设置宽度充满全屏----RecyclerView.LayoutParams
+        //ItemV
+        //
+        // iew设置宽度充满全屏----RecyclerView.LayoutParams
         RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(layoutParams);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -42,6 +44,7 @@ public class RecycleBaseAdapter extends RecyclerView.Adapter {
                 itemClickListener.onClick(position);
             }
         });
+
     }
 
     @Override

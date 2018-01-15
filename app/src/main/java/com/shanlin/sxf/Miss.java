@@ -76,7 +76,7 @@ public class Miss {
             User value = next.getValue();
         }
 
-        List<Map.Entry<Integer,User>> list=new ArrayList<Map.Entry<Integer, User>>(entries);
+        List<Map.Entry<Integer,User>> list= new ArrayList<>(entries);
         Collections.sort(list, new Comparator<Map.Entry<Integer, User>>() {
             @Override
             public int compare(Map.Entry<Integer, User> o1, Map.Entry<Integer, User> o2) {

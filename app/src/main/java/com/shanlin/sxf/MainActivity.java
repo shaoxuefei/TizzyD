@@ -1,10 +1,16 @@
 package com.shanlin.sxf;
 
+import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,24 +19,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.shanlin.sxf.api.ApiModule;
+import com.shanlin.sxf.dialog.MyDialogFragment;
+import com.shanlin.sxf.diyview.ItemClickCallBack;
+import com.shanlin.sxf.diyview.MyGroupItemView;
+import com.shanlin.sxf.diyview.MyViewGroup;
 import com.shanlin.sxf.diyview.TreasureViewActivity;
 import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
-import com.slfinance.facesdk.ui.IDCardScanActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.tencent.stat.StatService;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -40,121 +46,126 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button,button2,button3,button4,button5,treasureView,gsonButton,request,picture,myView;
     private LinearLayout linearRoot;
-    private ScrollView scrollView;
-    private String string;
+    private MyViewGroup myViewGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null) {
+        if (savedInstanceState != null) {
             String saveId = savedInstanceState.getString("saveId");
             if (!TextUtils.isEmpty(saveId)) {
                 Toast.makeText(this, saveId, Toast.LENGTH_SHORT).show();
             }
         }
         setContentView(R.layout.activity_main);
-        linearRoot= (LinearLayout) findViewById(R.id.linearRoot);
-        button= (Button) findViewById(R.id.button);
-        button2= (Button) findViewById(R.id.button2);
-        button3= (Button) findViewById(R.id.button3);
-        button4= (Button) findViewById(R.id.seekBar);
-        button5= (Button) findViewById(R.id.popubWindow);
-        request= (Button) findViewById(R.id.request);
-        gsonButton= (Button) findViewById(R.id.gsonButton);
-        scrollView= (ScrollView) findViewById(R.id.scrollView);
-        treasureView= (Button) findViewById(R.id.treasureView);
-        picture= (Button) findViewById(R.id.picture);
-        myView= (Button) findViewById(R.id.btnMyView);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, IDCardScanActivity.class);
-                startActivity(intent);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Main2Activity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.enter_in_anim,R.anim.insert_stay);
-            }
-        });
-
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,SingerActivity.class);
-                startActivity(intent);
-            }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,SeekBarActivity.class);
-                startActivity(intent);
-            }
-        });
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,PopubWindowActivity.class);
-                startActivity(intent);
-            }
-        });
-        treasureView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, TreasureViewActivity.class);
-                startActivity(intent);
-            }
-        });
-        gsonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, GsonActivity.class);
-                startActivity(intent);
-            }
-        });
-        request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestUrl();
-            }
-        });
-
-        picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                turnToPicture();
-            }
-        });
-
-        myView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,MyViewActivity.class);
-                startActivity(intent);
-            }
-        });
+        linearRoot = (LinearLayout) findViewById(R.id.linearRoot);
+        initMyViewGroup();
         initContentView();
-
+        checkPermission();
     }
+
+    private void initMyViewGroup() {
+        myViewGroup = (MyViewGroup) findViewById(R.id.myViewGroup);
+        myViewGroup.addView(new MyGroupItemView(this, "随性一笔"));
+        myViewGroup.addView(new MyGroupItemView(this, "SeekBar"));
+        myViewGroup.addView(new MyGroupItemView(this, "PopWindow-List"));
+        myViewGroup.addView(new MyGroupItemView(this, "简易版AutoLabel"));
+        myViewGroup.addView(new MyGroupItemView(this, "gson/fastJson-特殊字符转译"));
+        myViewGroup.addView(new MyGroupItemView(this, "Rxjava-请求示例"));
+        myViewGroup.addView(new MyGroupItemView(this, "Pic选择"));
+        myViewGroup.addView(new MyGroupItemView(this, "DialogFragment"));
+        myViewGroup.addView(new MyGroupItemView(this, "My DIY View"));
+        myViewGroup.addView(new MyGroupItemView(this, "跳转App"));
+        myViewGroup.setCallBack(new ItemClickCallBack() {
+            @Override
+            public void onItemClick(int position) {
+                switch (position) {
+                    case 0:
+                        Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.enter_in_anim, R.anim.insert_stay);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(MainActivity.this, SeekBarActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(MainActivity.this, PopubWindowActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case 3:
+                        Intent intent3 = new Intent(MainActivity.this, TreasureViewActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case 4:
+                        Intent intent4 = new Intent(MainActivity.this, GsonActivity.class);
+                        startActivity(intent4);
+                        break;
+                    case 5:
+                        requestUrl();
+                        break;
+                    case 6:
+                        //手动埋点+自定义事件信息(eventId、params)
+                        turnToPicture();
+                        Properties properties = new Properties();
+                        properties.put("name", "选择图片");
+                        StatService.trackCustomKVEvent(MainActivity.this, "onClick", properties);
+                        break;
+                    case 7:
+                        initDialogFragment();
+
+                        Properties properties2 = new Properties();
+                        properties2.put("name", "战士");
+                        properties2.put("price", 250);
+                        properties2.put("playerLevel", 5);
+                        StatService.trackCustomKVEvent(MainActivity.this, "buy", properties2);
+
+                        break;
+                    case 8:
+                        Intent intent8 = new Intent(MainActivity.this, MyViewActivity.class);
+                        startActivity(intent8);
+
+                        Properties properties1 = new Properties();
+                        properties1.put("name", "自定义View");
+                        StatService.trackCustomKVEvent(MainActivity.this, "onClick", properties1);
+
+                        break;
+                    case 9:
+                        Intent intent9 = new Intent();
+                        intent9.setAction("android.intent.action.MAIN");
+                        intent9.addCategory("android.intent.category.LAUNCHER");
+                        String packageName = "com.shanlin.nexu";
+                        String activityName = "com.shanlin.nexu.MainActivity";
+                        ComponentName componentName = new ComponentName(packageName, activityName);
+                        intent9.setComponent(componentName);
+//                        startService(intent9);
+                        startActivity(intent9);
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+        });
+    }
+
 
     private ImageView image;
     private Button btnSign;
-    private final int SIGN_REQUEST_CODE=0x31;
-    private void initContentView(){
-        ContentView contentView=new ContentView(this);
-        SignNameView signNameView=new SignNameView(this);
-        image= (ImageView) signNameView.findViewById(R.id.image);
-        btnSign= (Button) signNameView.findViewById(R.id.btnSign);
+    private final int SIGN_REQUEST_CODE = 0x31;
+
+    private void initContentView() {
+        ContentView contentView = new ContentView(this);
+        SignNameView signNameView = new SignNameView(this);
+        image = (ImageView) signNameView.findViewById(R.id.image);
+        btnSign = (Button) signNameView.findViewById(R.id.btnSign);
         btnSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, PaintActivity.class);
-                startActivityForResult(intent,SIGN_REQUEST_CODE);
+                Intent intent = new Intent(MainActivity.this, PaintActivity.class);
+                startActivityForResult(intent, SIGN_REQUEST_CODE);
             }
         });
         linearRoot.addView(contentView);
@@ -164,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK&&requestCode==SIGN_REQUEST_CODE){
-            if(data!=null) {
+        if (resultCode == RESULT_OK && requestCode == SIGN_REQUEST_CODE) {
+            if (data != null) {
                 byte[] imageBytes = data.getByteArrayExtra("imageByte");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                 image.setImageBitmap(bitmap);
@@ -174,18 +185,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void requestUrl(){
-        String absolutePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()+"/Screenshots";
+    public void requestUrl() {
+        String absolutePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/Screenshots";
         File file = new File(absolutePath);
         File fileName = new File(file, "timg.jpg");
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), fileName);
         MultipartBody.Part part = MultipartBody.Part.createFormData("multipartFile", fileName.getName(), requestBody);
         Map<String, RequestBody> hashMap = new HashMap<>();
-        RequestBody requestBody1=RequestBody.create(MediaType.parse("application/json"),"");
-        hashMap.put("request",requestBody1);
+        RequestBody requestBody1 = RequestBody.create(MediaType.parse("application/json"), "");
+        hashMap.put("request", requestBody1);
         ApiModule.getInstance()
                 .getApiUrl()
-                .postPic(part,hashMap)
+                .postPic(part, hashMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<JsonObject>() {
@@ -209,29 +220,59 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void turnToPicture(){
-        //调用系统相册
-        Intent intent=new Intent(this,PictureActivity.class);
+    public void turnToPicture() {
+        Intent intent = new Intent(this, PictureActivity.class);
         startActivity(intent);
+    }
+
+    public void initDialogFragment() {
+        MyDialogFragment myDialogFragment = MyDialogFragment.newInstance();
+        myDialogFragment.show(getSupportFragmentManager(), "MyDialogFragment");
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Bundle bundle=new Bundle();
-        bundle.putString("saveId","HelloWorld");
+        Bundle bundle = new Bundle();
+        bundle.putString("saveId", "HelloWorld");
         onSaveInstanceState(bundle);
     }
+
     //Activity-不会主动调用--需要手动调用--一般在onPause()之前调用
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        Log.e("aa","onSaveInstance-Activity");
+        Log.e("aa", "onSaveInstance-Activity");
     }
+
     //AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.e("aa","onSaveInstance_AppCompatActivity");
+        Log.e("aa", "onSaveInstance_AppCompatActivity");
+    }
+
+
+    private void checkPermission() {
+        if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 10) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
+                }
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
+            }
+        }
     }
 }

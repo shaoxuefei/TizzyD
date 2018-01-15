@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shanlin.sxf.diyview.MyViewItemActivity">
+
+    <com.shanlin.sxf.diyview.MyView
+        android:id="@+id/myView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/black"
+        android:padding="20dp"
+        custom:myViewText="HelloWorld"
+        custom:myViewTextColor="#ff0000"
+        custom:myViewTextSize="25sp" />
+
+    <com.shanlin.sxf.diyview.MyViewGroup
+        android:id="@+id/myViewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:padding="10dp"
+        custom:horna="10dp"
+        custom:vertica="10dp">
+
+    </com.shanlin.sxf.diyview.MyViewGroup>
+
+
+</LinearLayout>

@@ -8,14 +8,16 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Sxf on 2017/9/20.
  */
 
 public class MyService extends Service {
-    public static String tag="com.shanlin.sxf.service.MyService";
+    public static String tag = "com.shanlin.sxf.service.MyService";
     public static Handler mHandler;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -25,19 +27,20 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("aa","onCreate");
+        Log.e("aa", "onCreate");
     }
 
     @Override
-    public int onStartCommand(Intent intent,  int flags, int startId) {
-        Log.e("aa","onStartCommand");
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this, "DemoService", Toast.LENGTH_SHORT).show();
+        Log.e("aa", "onStartCommand");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Log.e("aa","newThreadStart");
+                    Log.e("aa", "newThreadStart");
                     Thread.sleep(5000);
-                    if(mHandler!=null) {
+                    if (mHandler != null) {
                         mHandler.sendEmptyMessage(2);
                     }
                 } catch (InterruptedException e) {
@@ -59,10 +62,11 @@ public class MyService extends Service {
         super.onDestroy();
 
     }
-    public static void startMyService(Context context, Handler hander){
-        mHandler=hander;
-        Intent intent=new Intent(context,MyService.class);
-        intent.putExtra("tag",tag);
+
+    public static void startMyService(Context context, Handler hander) {
+        mHandler = hander;
+        Intent intent = new Intent(context, MyService.class);
+        intent.putExtra("tag", tag);
         context.startService(intent);
     }
 }

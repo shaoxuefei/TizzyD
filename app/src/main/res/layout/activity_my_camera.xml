@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.shanlin.sxf.MyCameraActivity">
+
+    <TextureView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnRoot" />
+
+    <FrameLayout
+        android:id="@+id/rootLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnRoot"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.shanlin.sxf.diyview.MyDiyImageView
+            android:id="@+id/myDiyImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:areaBgApha="125"
+            custom:areaBgColor="@color/black"
+            custom:lineApha="50"
+            custom:lineColor="@color/white" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnRoot"
+        android:layout_centerInParent="true"
+        android:src="@drawable/facelogin_bg" />
+
+    <RelativeLayout
+        android:id="@+id/btnRoot"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/picImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+
+        <ImageView
+            android:id="@+id/btnPicture"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/icon_capture" />
+
+        <Button
+            android:id="@+id/extraBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="1" />
+    </RelativeLayout>
+
+</RelativeLayout>

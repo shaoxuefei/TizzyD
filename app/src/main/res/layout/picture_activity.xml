@@ -8,8 +8,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pictureAll"
+        android:text="图库"
         android:id="@+id/pictureAllButton"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tackPicture"
+        android:text="拍照"
         />
     <ImageView
         android:layout_width="wrap_content"
@@ -21,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/muchSelectPicture"
-        android:text="muchSelectPicture"
+        android:text="选择多张照片"
         />
     <TextView
         android:layout_width="wrap_content"

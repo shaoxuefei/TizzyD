@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.shanlin.sxf">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    //Bugly的权限配置
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".application.MyApplication"
@@ -17,7 +20,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <meta-data
+            android:name="CHANNEL_ID"
+            android:value="${CHANNEL_ID_VALUE}" />
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -26,6 +34,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <data android:scheme="mtaautotrack.a4ab60dc1d25a6c0e397fcd3cf32d055" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".Main2Activity"
@@ -57,7 +74,11 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".service.MyIntentService" />
-        <service android:name=".service.MyService" />
+        <service android:name=".service.MyService">
+            <intent-filter>
+                <action android:name="com.shanlin.sxf.MyService" />
+            </intent-filter>
+        </service>
         <!-- priority 范围：-1000~1000 广播接受优先级 -->
         <receiver android:name=".broadcast.MyBroadCastReceive">
             <intent-filter android:priority="500">
@@ -71,7 +92,14 @@
         <!-- </intent-filter> -->
         <!-- </receiver> -->
         <activity android:name=".fragment.MFragmentActivity" />
-        <activity android:name=".MyViewActivity"></activity>
+        <activity android:name=".MyViewActivity" />
+        <activity android:name=".diyview.MyViewItemActivity" />
+        <activity
+            android:name=".MyTransParenceActivity"
+            android:theme="@style/AppThansParentThream" />
+        <activity android:name=".MyCameraActivity" />
+        <activity android:name=".MyCameraViewActivity" />
+        <activity android:name=".MyCamera2Activity"></activity>
     </application>
 
 </manifest>
