@@ -3,6 +3,7 @@ package com.shanlin.sxf.diyview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -196,5 +197,11 @@ public class MyViewGroup extends ViewGroup implements ItemClickCallBack {
 
     public void setCallBack(ItemClickCallBack callBack) {
         itemClickCallBack = callBack;
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
     }
 }

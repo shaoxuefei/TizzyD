@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.shanlin.sxf.diytouch.MyLinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="200dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.shanlin.sxf.diytouch.MyTextView
+            android:id="@+id/myTextView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary" />
+
+    </com.shanlin.sxf.diytouch.MyLinearLayout>
+
+</android.support.constraint.ConstraintLayout>

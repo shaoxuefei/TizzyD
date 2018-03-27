@@ -4,15 +4,20 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.FrameLayout;
 
 import com.google.gson.JsonObject;
 import com.shanlin.sxf.api.ApiModule;
+import com.shanlin.sxf.nested.NestedFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +43,10 @@ public class Main4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.frameLayout, NestedFragment.newInstance(), "NESTED_FRAGMENT");
+        fragmentTransaction.commit();
+
     }
 
     public void loadData() {
@@ -178,7 +187,7 @@ public class Main4Activity extends AppCompatActivity {
         //顾取消订阅是观察者取消--也就是Observer--Subscriber--Subscription
         Subscription subscription = subscriber;
         subscription.unsubscribe();
-        
+
 
         /**
          * map--String
@@ -259,7 +268,7 @@ public class Main4Activity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //取消订阅--不可直接写在.subscribe().后边，这样会直接取消订阅走不到回调方法
-        if (subscription1.isUnsubscribed()) {
+        if (subscription1 != null && subscription1.isUnsubscribed()) {
             subscription1.unsubscribe();
         }
 

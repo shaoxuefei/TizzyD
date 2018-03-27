@@ -1,9 +1,13 @@
 package com.shanlin.sxf.diyview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.shanlin.sxf.R;
+import com.shanlin.sxf.canvas.YuanBingView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Sxf on 2017/5/16.
@@ -12,16 +16,28 @@ import com.shanlin.sxf.R;
  * @detail:
  */
 public class TreasureViewActivity extends AppCompatActivity {
-    private TreasureLineView treasureView;
+
+    @BindView(R.id.yuanBing)
+    YuanBingView yuanBing;
+    @BindView(R.id.yuanBiao)
+    YuanBingView yuanBiao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.treasure_view_activity);
-        treasureView= (TreasureLineView) findViewById(R.id.treasureView);
-        String []strings=new String[]{"黄带的骄傲","打啊但大家带带马达","但大家带带马达","达到","大大大大大"};
-        for (int i=0;i<5;i++){
-            TreasureChildView childView=new TreasureChildView(this,strings[i]);
-            treasureView.addView(childView);
-        }
+        ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+        yuanBing.setAnima(true);
+        yuanBiao.setAnima(false);
+        yuanBiao.setTable(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

@@ -34,15 +34,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <data android:scheme="mtaautotrack.a4ab60dc1d25a6c0e397fcd3cf32d055" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".Main2Activity"
@@ -99,7 +98,9 @@
             android:theme="@style/AppThansParentThream" />
         <activity android:name=".MyCameraActivity" />
         <activity android:name=".MyCameraViewActivity" />
-        <activity android:name=".MyCamera2Activity"></activity>
+        <activity android:name=".MyCamera2Activity" />
+
+        <activity android:name=".MainTouchActivity" />
     </application>
 
 </manifest>

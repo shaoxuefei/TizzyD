@@ -17,7 +17,7 @@
 
     </com.shanlin.sxf.diyview.MyViewGroup>
 
-    <ScrollView
+    <com.shanlin.sxf.MyScrollViw
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +33,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.shanlin.sxf.MyScrollViw>
 
 </LinearLayout>

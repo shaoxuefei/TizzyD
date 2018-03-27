@@ -7,4 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="gray">#333333</color>
     <color name="backroud">#FF6F12</color>
+
+    <color name="red">#ff0000</color>
+    <color name="gray_9">#999999</color>
 </resources>

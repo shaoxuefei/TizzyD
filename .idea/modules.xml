@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Demo.iml" filepath="$PROJECT_DIR$/Demo.iml" />
+      <module fileurl="file://D:\AndroidStudioProjects\TizzyD\Demo.iml" filepath="D:\AndroidStudioProjects\TizzyD\Demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TizzyD.iml" filepath="$PROJECT_DIR$/TizzyD.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" filepath="$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" />
     </modules>

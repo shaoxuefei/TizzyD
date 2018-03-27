@@ -10,24 +10,31 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarlayout"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/blackColor"
+            android:text="AppBarLayout"
+            android:textColor="@color/white"
+            app:layout_scrollFlags="scroll" />
+
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
             android:id="@+id/collapsToolLayout"
-            app:contentScrim="@color/colorPrimary"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:visibility="visible"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
+                android:id="@+id/iv_toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@color/colorAccent"
-                app:layout_collapseParallaxMultiplier="0.5"
-                app:layout_collapseMode="parallax" />
-
+                android:background="@color/colorAccent" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolBar"
@@ -35,41 +42,44 @@
                 android:layout_height="50dp"
                 android:visibility="visible"
                 app:contentInsetStart="0dp"
-                app:layout_collapseMode="pin"
-                >
+                app:layout_collapseMode="pin">
+
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@color/colorAccent"
                     android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:text="ToolBar"
                     android:textColor="@color/blackColor"
                     android:textSize="18sp"
-                    android:visibility="gone" />
+                    android:visibility="visible"
+                    app:layout_collapseMode="pin" />
             </android.support.v7.widget.Toolbar>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="CollapsingToolbarLayout"
+                android:textColor="@color/white" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:tabIndicatorColor="#FF6F12"
             app:tabSelectedTextColor="@color/backroud"
-            app:tabTextColor="@color/gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.design.widget.TabLayout>
-
+            app:tabTextColor="@color/gray" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent">
-
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 </android.support.design.widget.CoordinatorLayout>

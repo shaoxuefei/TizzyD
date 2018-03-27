@@ -86,6 +86,19 @@ public class MyApplication extends Application {
         }
     }
 
+    private static MyApplication myApplication;
+
+    public static MyApplication getInstance() {
+        if (myApplication == null) {
+            myApplication = new MyApplication();
+        }
+        return myApplication;
+    }
+
+    public Context getContext(){
+        return this;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

@@ -70,13 +70,14 @@ public class MainActivity extends AppCompatActivity {
         myViewGroup.addView(new MyGroupItemView(this, "随性一笔"));
         myViewGroup.addView(new MyGroupItemView(this, "SeekBar"));
         myViewGroup.addView(new MyGroupItemView(this, "PopWindow-List"));
-        myViewGroup.addView(new MyGroupItemView(this, "简易版AutoLabel"));
+        myViewGroup.addView(new MyGroupItemView(this, "饼状图/表"));
         myViewGroup.addView(new MyGroupItemView(this, "gson/fastJson-特殊字符转译"));
         myViewGroup.addView(new MyGroupItemView(this, "Rxjava-请求示例"));
         myViewGroup.addView(new MyGroupItemView(this, "Pic选择"));
         myViewGroup.addView(new MyGroupItemView(this, "DialogFragment"));
         myViewGroup.addView(new MyGroupItemView(this, "My DIY View"));
         myViewGroup.addView(new MyGroupItemView(this, "跳转App"));
+        myViewGroup.addView(new MyGroupItemView(this, "事件分析"));
         myViewGroup.setCallBack(new ItemClickCallBack() {
             @Override
             public void onItemClick(int position) {
@@ -142,7 +143,10 @@ public class MainActivity extends AppCompatActivity {
 //                        startService(intent9);
                         startActivity(intent9);
                         break;
-
+                    case 10:
+                        Intent intent10 = new Intent(MainActivity.this, MainTouchActivity.class);
+                        startActivity(intent10);
+                        break;
                     default:
                         break;
                 }
