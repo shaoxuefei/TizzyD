@@ -171,61 +171,47 @@ public class YuanBingView extends View {
                             (float) doubles[0] - lineWidth - space - textWidth,
                             (float) doubles[1] + lineWidth + textHeight);
                 } else if (angleTurn > 0 && angleTurn < 90) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] - lineWidth - space - textWidth);
-                    key[1] = (float) (doubles[1] - lineWidth);
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) (doubles[0] - lineWidth), (float) (doubles[1] - lineWidth), (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) (doubles[0] - lineWidth),
+                            (float) (doubles[1] - lineWidth),
+                            (float) (doubles[0] - lineWidth - space - textWidth),
+                            (float) (doubles[1] - lineWidth));
                 } else if (angleTurn > 90 && angleTurn < 180) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] + space + lineWidth);
-                    key[1] = (float) (doubles[1] - lineWidth);
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) (doubles[0] + lineWidth), (float) (doubles[1] - lineWidth), (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0] + lineWidth,
+                            (float) doubles[1] - lineWidth,
+                            (float) doubles[0] + space + lineWidth,
+                            (float) doubles[1] - lineWidth);
                 } else if (angleTurn > 180 && angleTurn < 270) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] + lineWidth + space);
-                    key[1] = (float) (doubles[1] + lineWidth + textHeight);
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) doubles[0] + lineWidth, (float) doubles[1] + lineWidth, (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0] + lineWidth,
+                            (float) doubles[1] + lineWidth,
+                            (float) doubles[0] + lineWidth + space,
+                            (float) doubles[1] + lineWidth + textHeight);
                 } else if (angleTurn == -90) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] - textWidth / 2);
-                    key[1] = (float) doubles[1] + lineWidth + space + textHeight;
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) doubles[0], (float) doubles[1] + lineWidth, (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0],
+                            (float) doubles[1] + lineWidth,
+                            (float) doubles[0] - textWidth / 2,
+                            (float) doubles[1] + lineWidth + space + textHeight);
                 } else if (angleTurn == 0 || tabStart == 360) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] - lineWidth - space - textWidth);
-                    key[1] = (float) (doubles[1] + textHeight / 2);
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) doubles[0] - lineWidth, (float) doubles[1], (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0] - lineWidth,
+                            (float) doubles[1],
+                            (float) doubles[0] - lineWidth - space - textWidth,
+                            (float) doubles[1] + textHeight / 2);
                 } else if (angleTurn == 90) {
-                    float[] key = new float[2];
-                    key[0] = (float) doubles[0] - textWidth / 2;
-                    key[1] = (float) doubles[1] - lineWidth - space;
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) doubles[0], (float) doubles[1], (float) doubles[0], (float) doubles[1] - lineWidth, textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0],
+                            (float) doubles[1] - lineWidth,
+                            (float) doubles[0] - textWidth / 2,
+                            (float) doubles[1] - lineWidth - space);
                 } else if (angleTurn == 180) {
-                    float[] key = new float[2];
-                    key[0] = (float) (doubles[0] + lineWidth + space);
-                    key[1] = (float) (doubles[1] + textHeight / 2);
-                    keyMap.put(angleTurn, key);
-
-                    canvas.drawLine((float) (doubles[0] + lineWidth), (float) doubles[1], (float) doubles[0], (float) doubles[1], textPaint);
-                    canvas.drawText(tableNums[j], key[0], key[1], textPaint);
+                    drawLineAndText(canvas, tableNums[j], doubles, angleTurn, textWidth, textHeight,
+                            (float) doubles[0] + lineWidth,
+                            (float) doubles[1],
+                            (float) doubles[0] + lineWidth + space,
+                            (float) doubles[1] + textHeight / 2);
                 }
                 tableSweep = 30;
             }

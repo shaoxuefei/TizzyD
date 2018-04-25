@@ -4,36 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestScrollView"
+    <com.shanlin.sxf.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
 
-            <ImageView
-                android:id="@+id/image"
+            <RelativeLayout
+                android:id="@+id/relative"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/colorPrimary" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/colorPrimary" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/image" />
 
-        </LinearLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tabLayout" />
 
-    </android.support.v4.widget.NestedScrollView>
+            </RelativeLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.shanlin.sxf.SwipeRefreshLayout>
 
 </LinearLayout>
