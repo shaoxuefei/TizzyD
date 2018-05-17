@@ -99,6 +99,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
         //设置窗口内的View的显示和隐藏--
         //View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN--这个属性是View的属性---状态栏显示但是会盖住顶部布局
+        //这种就是需要设置的--因为有些状态栏并不是纯色的、所以需要这样兼容设置、即是沉浸式又是可以设置其StatusBarColor
+        //从这里也可以看出来--沉浸式设置一个是FLAG_TRANSLUCENT_STATUS一个就是FLAG_FULLSCREEN--但是考虑到颜色用默认的话一般用----FLAG_TRANSLUCENT_STATUS--所以配合可以动态控制颜色、所以一般混合使用
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             int uiFlag = 0;
