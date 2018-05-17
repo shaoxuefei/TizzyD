@@ -13,4 +13,16 @@
         <item name="android:windowEnterAnimation">@anim/dialog_push_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_push_out</item>
     </style>
+
+
+    <!--沉浸式状态栏主题设置-->
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentNavigation">false</item>
+        <!--5.0-6.0 新特性修改状态栏颜色、、必须设置该属性、同样的是去除windowTranslucentStatus、、这种针对纯色的背景还是可以解决的、但是对于背景图的话就必须设置
+        沉浸式的属性了也就是windowTranslucentStatus、、因为图片状态栏你是设置不了了-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/red</item>
+
+    </style>
 </resources>

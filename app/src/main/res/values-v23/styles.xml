@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentNavigation">false</item>
+        <!--Android  6.0以上才有 状态栏字体颜色设置成亮色、也就是黑色-->
+        <item name="android:windowLightStatusBar">true</item>
+        <!--6.0后设置状态栏颜色的话必须是windowTranslucentStatus去除半透明的设置，才可以设置颜色，而且windowTranslucentStatus设置后其会自动沉浸式-->
+        <item name="android:statusBarColor">@color/red</item>
+    </style>
+</resources>

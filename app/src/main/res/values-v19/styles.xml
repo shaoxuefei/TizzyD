@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--沉浸式状态栏主题设置-->
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--4.4.2-5.0以上windowTranslucentStatus是设置状态栏为半透明状态、、如果想修改其颜色的话必须自动添加一个view替代状态栏
+        、、、windowTranslucentStatus设置true后都自动回使状态栏不占布局空间\\也就是自动沉浸式-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+</resources>

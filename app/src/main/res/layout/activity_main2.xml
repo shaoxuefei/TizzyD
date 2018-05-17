@@ -5,12 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="我是标题"
+        android:textColor="@color/black" />
+
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:layout_below="@+id/tv_title"
+        android:background="@color/c_F1F1F1"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/snackbar_text"
@@ -43,8 +54,8 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_below="@+id/linear">
+        android:layout_below="@+id/linear"
+        android:background="@color/c_F1F1F1">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatButton"

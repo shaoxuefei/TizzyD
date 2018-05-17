@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         myViewGroup.addView(new MyGroupItemView(this, "My DIY View"));
         myViewGroup.addView(new MyGroupItemView(this, "跳转App"));
         myViewGroup.addView(new MyGroupItemView(this, "事件分析"));
+        myViewGroup.addView(new MyGroupItemView(this, "重定项-URL2JS"));
+        myViewGroup.addView(new MyGroupItemView(this, "ScrollCompat"));
         myViewGroup.setCallBack(new ItemClickCallBack() {
             @Override
             public void onItemClick(int position) {
@@ -146,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
                     case 10:
                         Intent intent10 = new Intent(MainActivity.this, MainTouchActivity.class);
                         startActivity(intent10);
+                        break;
+                    case 11:
+                        Intent intent11 = new Intent(MainActivity.this, MyWebViewActivity.class);
+                        startActivity(intent11);
+                        break;
+                    case 12:
+                        Intent intent12 = new Intent(MainActivity.this, ScrollCompatActivity.class);
+                        startActivity(intent12);
                         break;
                     default:
                         break;
