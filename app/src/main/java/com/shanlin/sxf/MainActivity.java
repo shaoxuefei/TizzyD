@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent11);
                         break;
                     case 12:
-                        Intent intent12 = new Intent(MainActivity.this, ScrollCompatActivity.class);
+                        Intent intent12 = new Intent(MainActivity.this, RecyclerViewDecorationActivity.class);
                         startActivity(intent12);
                         break;
                     default:

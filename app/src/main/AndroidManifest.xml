@@ -105,7 +105,7 @@
         <activity android:name=".MyCamera2Activity" />
         <activity android:name=".MainTouchActivity" />
         <activity android:name=".MyWebViewActivity" />
-        <activity android:name=".ScrollCompatActivity"></activity>
+        <activity android:name=".RecyclerViewDecorationActivity"></activity>
     </application>
 
 </manifest>

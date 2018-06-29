@@ -80,7 +80,7 @@ android {
             signingConfig signingConfigs.config//引用 release 打包引用签名文件--signingConfigs.config文件夹
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config//引用 release 打包引用签名文件--signingConfigs.config文件夹
         }

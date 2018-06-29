@@ -26,10 +26,10 @@
 
 
 #MTA
--keep class com.tencent.stat.* { ;}
+-keep class com.tencent.stat.* { *;}
+-keep class com.tencent.mid.* { *;}
 
--keep class com.tencent.mid.* { ;}
-
+-ignorewarnings
 
 #retrofit
 -dontwarn okio.**
