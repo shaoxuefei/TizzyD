@@ -260,6 +260,30 @@ public class Main4Activity extends AppCompatActivity {
 
                     }
                 });
+
+
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+
+            }
+        }).subscribe(new Observer<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        });
+
     }
 
     private Subscription subscription1;

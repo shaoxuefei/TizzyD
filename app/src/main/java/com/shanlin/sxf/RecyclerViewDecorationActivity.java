@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shanlin.sxf.diyview.RecyclerViewDivider;
 import com.shanlin.sxf.diyview.SwipeMenuLayout;
@@ -62,11 +63,17 @@ public class RecyclerViewDecorationActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MyViewHolder myViewHolder = (MyViewHolder) holder;
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+            final MyViewHolder myViewHolder = (MyViewHolder) holder;
 //            myViewHolder.swipeLayout.setContentView(myViewHolder.tvTitle);
 //            myViewHolder.swipeLayout.setMenuView(myViewHolder.menuView);
             myViewHolder.tvTitle.setText("sayHei" + position);
+            myViewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(RecyclerViewDecorationActivity.this, "" + position + "--" + myViewHolder.tvTitle.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override

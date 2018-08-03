@@ -46,8 +46,8 @@
         <activity
             android:name=".Main2Activity"
             android:screenOrientation="portrait" />
-        <!--android:theme="@style/TranslucentTheme"-->
-        <!--/>-->
+        <!-- android:theme="@style/TranslucentTheme" -->
+        <!-- /> -->
         <activity
             android:name=".Main3Activity"
             android:theme="@style/TranslucentTheme" />
@@ -105,7 +105,25 @@
         <activity android:name=".MyCamera2Activity" />
         <activity android:name=".MainTouchActivity" />
         <activity android:name=".MyWebViewActivity" />
-        <activity android:name=".RecyclerViewDecorationActivity"></activity>
+        <activity android:name=".RecyclerViewDecorationActivity" />
+        <activity android:name=".MethodRangeActivity"></activity>
+
+        <!--bugly热修复之配置-->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

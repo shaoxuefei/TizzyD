@@ -82,4 +82,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
+    <Button
+        android:id="@+id/btnStr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:text="changeData" />
+
 </android.support.design.widget.CoordinatorLayout>

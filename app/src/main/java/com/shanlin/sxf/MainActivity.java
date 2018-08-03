@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         initMyViewGroup();
         initContentView();
         checkPermission();
+
+        Toast.makeText(this, "TENCENT_PATCH_HOT", Toast.LENGTH_SHORT).show();
     }
 
     private void initMyViewGroup() {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         myViewGroup.addView(new MyGroupItemView(this, "事件分析"));
         myViewGroup.addView(new MyGroupItemView(this, "重定项-URL2JS"));
         myViewGroup.addView(new MyGroupItemView(this, "ScrollCompat"));
+        myViewGroup.addView(new MyGroupItemView(this, "方法作用域"));
         myViewGroup.setCallBack(new ItemClickCallBack() {
             @Override
             public void onItemClick(int position) {
@@ -156,6 +159,10 @@ public class MainActivity extends AppCompatActivity {
                     case 12:
                         Intent intent12 = new Intent(MainActivity.this, RecyclerViewDecorationActivity.class);
                         startActivity(intent12);
+                        break;
+                    case 13:
+                        Intent intent13 = new Intent(MainActivity.this, MethodRangeActivity.class);
+                        startActivity(intent13);
                         break;
                     default:
                         break;

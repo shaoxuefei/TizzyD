@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class Main3Activity extends AppCompatActivity {
     private ViewPager viewPager;
     private String[] tabTitle = new String[]{"Tab01", "Tab02"};
     private ArrayList<PageItemView> arrayList = new ArrayList<>();
+    private Button btnStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class Main3Activity extends AppCompatActivity {
         collapsToolLayout.setTitle("Title");
         appBarlayout = findViewById(R.id.appBarlayout);
         tabLayout = findViewById(R.id.tabLayout);
+        btnStr = findViewById(R.id.btnStr);
         appBarlayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -97,6 +100,16 @@ public class Main3Activity extends AppCompatActivity {
                 Toast.makeText(Main3Activity.this, tab.getText(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        btnStr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PageItemView pageItemView = arrayList.get(0);
+                pageItemView.updateData();
+            }
+        });
+
     }
 
 

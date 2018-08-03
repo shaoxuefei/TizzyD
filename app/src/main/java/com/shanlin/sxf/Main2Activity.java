@@ -83,6 +83,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             //下6.0的类同
             //但是这种的设置--针对纯色的状态栏还是可以的、、但是针对图片的就不可以了，，还是乖乖的用FLAG_TRANSLUCENT_STATUS=true设置沉浸式的
             //当然这种直接setStatusBarColor手动设置颜色的方法就不用再根布局中设置fitSystemWindows=true了、因为其本身就不是沉浸式、不会覆盖布局、就不用设置嵌套属性了
+            //android:fitsSystemWindows="true"  这个在Fragment切换的时候也就是类似于Viewpager的形式的时候，其可能切换Tab然后修改状态栏颜色或者是字体颜色时，会出现覆盖隐藏问题
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

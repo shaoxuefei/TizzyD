@@ -17,6 +17,7 @@ public class RecycleBaseAdapter extends RecyclerView.Adapter {
     private ArrayList<String> arrayList;
     private Context context;
     private ItemClickListener itemClickListener;
+
     public RecycleBaseAdapter(ArrayList<String> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
@@ -28,7 +29,7 @@ public class RecycleBaseAdapter extends RecyclerView.Adapter {
         //ItemV
         //
         // iew设置宽度充满全屏----RecyclerView.LayoutParams
-        RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(layoutParams);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
@@ -57,16 +58,17 @@ public class RecycleBaseAdapter extends RecyclerView.Adapter {
         return super.getItemViewType(position);
     }
 
-    public void  setOnItemClickListener(ItemClickListener itemClickListener){
-        this.itemClickListener=itemClickListener;
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public View itemView;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            this.itemView=itemView;
+            this.itemView = itemView;
             textView = (TextView) itemView.findViewById(R.id.textView);
         }
 

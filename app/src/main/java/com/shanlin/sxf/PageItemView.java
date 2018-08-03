@@ -77,6 +77,21 @@ public class PageItemView extends LinearLayout implements ItemClickListener {
         });
     }
 
+    /**
+     * adapter.notifyDataSetChanged()---当更新的数据源比源数据源多或者是相等的话--其更新不会进行列表滑动--但是如果更新后数据源比之前的数据源少的话--会进行重新渲染也就是会滑动到顶部
+     * 但是如果数据源添加到头部也就是 position=0的位置的话、、、其不会滚动，，也就是位置不会变，，但是数据源会变，，也就是说之前滑上去的数据源会是新的数据源、、之前老的数据源会展示在下边，类似于把它顶下来了，
+     */
+    public void updateData() {
+        ArrayList<String> uploadData = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            uploadData.add(i, i + "");
+        }
+//        arrayList.clear();
+        arrayList.addAll(0, uploadData);
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), "Update", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onClick(int position) {
         if (canClick) {

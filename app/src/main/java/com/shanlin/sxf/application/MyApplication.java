@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shanlin.sxf.BuildConfig;
 import com.shanlin.sxf.crash.DIYCrashHandler;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mta.track.StatisticsDataAPI;
 import com.tencent.stat.MtaSDkException;
@@ -49,6 +51,10 @@ public class MyApplication extends Application {
 
         //设置CrashHandler工具
         DIYCrashHandler.init(this);
+
+
+        //bugly-repost---boolean:是否打印日志
+        Bugly.init(this, "43c9a7d274", true);
 
 
         //Bugly初始化配置--注册后生产的appid:43c9a7d274
@@ -95,7 +101,7 @@ public class MyApplication extends Application {
         return myApplication;
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return this;
     }
 
@@ -104,6 +110,9 @@ public class MyApplication extends Application {
         super.attachBaseContext(base);
         //注册：分包，防止方法超过65536--
         MultiDex.install(this);
+        //安装Tinker
+        Beta.installTinker();
+
     }
 
     //自定义Crash回调
