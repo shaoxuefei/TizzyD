@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from: 'tinker-support.gradle'
+//apply from: 'tinker-support.gradle'
 
 File signPropertiesFile = rootProject.file(STORE_FILE)
 android {

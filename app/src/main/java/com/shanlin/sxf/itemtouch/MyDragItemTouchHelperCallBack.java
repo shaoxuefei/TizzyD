@@ -42,13 +42,14 @@ public class MyDragItemTouchHelperCallBack extends ItemTouchHelper.Callback {
         return true;
     }
 
-    //
+    //---长按拖动后的移动回调
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         scrollMyAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return true;
     }
 
+    //滑动删除后的回调
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         scrollMyAdapter.onItemDissmiss(viewHolder.getAdapterPosition());

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author : SXF
@@ -42,7 +43,7 @@ public class MyTextView extends TextView {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-//        Log.e("aa", "MyTextView---dispatchTouchEvent-----" + super.dispatchTouchEvent(event));
+        Log.e("aa", ">>>>>>>>>>>>>>MyTextView----MotionEvent");
         return super.dispatchTouchEvent(event);
     }
 
@@ -53,7 +54,8 @@ public class MyTextView extends TextView {
          MyTextView---onTouchEvent-----false
          MyLinearLayout---onTouchEvent-----false
          */
-        Log.e("aa", "MyTextView---onTouchEvent-----" + super.onTouchEvent(event));
+        Log.e("aa", ">>>>>>>>>>>>>>MyTextView----onTouchEvent");
+        Toast.makeText(getContext(),event.getAction(),Toast.LENGTH_SHORT).show();
         //false表示不消耗  直接向上传----true表示消耗不会向上传onTouchEvent
         return true;
     }

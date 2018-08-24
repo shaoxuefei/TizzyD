@@ -16,7 +16,7 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -46,11 +46,7 @@
         <activity
             android:name=".Main2Activity"
             android:screenOrientation="portrait" />
-        <!-- android:theme="@style/TranslucentTheme" -->
-        <!-- /> -->
-        <activity
-            android:name=".Main3Activity"
-            android:theme="@style/TranslucentTheme" />
+        <activity android:name=".Main3Activity" />
         <activity
             android:name=".Main4Activity"
             android:screenOrientation="portrait" />
@@ -106,9 +102,9 @@
         <activity android:name=".MainTouchActivity" />
         <activity android:name=".MyWebViewActivity" />
         <activity android:name=".RecyclerViewDecorationActivity" />
-        <activity android:name=".MethodRangeActivity"></activity>
+        <activity android:name=".MethodRangeActivity" />
 
-        <!--bugly热修复之配置-->
+        <!-- bugly热修复之配置 -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
@@ -124,6 +120,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <activity android:name=".VolumeActivity"></activity>
     </application>
 
 </manifest>

@@ -9,4 +9,6 @@ package com.shanlin.sxf.bean;
 public class MethodBean {
 
     public String textNum;
+
+    public String tvContent;
 }

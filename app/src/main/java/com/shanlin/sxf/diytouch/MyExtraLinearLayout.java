@@ -15,13 +15,13 @@ import android.widget.RelativeLayout;
  * desc    :
  */
 
-public class MyLinearLayout extends RelativeLayout {
+public class MyExtraLinearLayout extends RelativeLayout {
 
-    public MyLinearLayout(Context context) {
+    public MyExtraLinearLayout(Context context) {
         super(context);
     }
 
-    public MyLinearLayout(Context context, @Nullable AttributeSet attrs) {
+    public MyExtraLinearLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -42,8 +42,8 @@ public class MyLinearLayout extends RelativeLayout {
     //ViewGroup 中的dispatchTouchEvent  其实感觉没啥用，内部还是调用的onInterceptTouchEvent
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.e("aa", ">>>>>>>>>>>>>>LinearLayout----dispatchTouchEvent");
-        return super.dispatchTouchEvent(ev);
+        Log.e("aa", ">>>>>>>>>>>>>>MyExtraLinearLayout----dispatchTouchEvent");
+        return false;
     }
 
     /**
@@ -54,7 +54,7 @@ public class MyLinearLayout extends RelativeLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.e("aa", ">>>>>>>>>>>>>>LinearLayout----onInterceptTouchEvent");
+        Log.e("aa", ">>>>>>>>>>>>>>MyExtraLinearLayout----onInterceptTouchEvent");
         return false;
     }
 
@@ -68,7 +68,7 @@ public class MyLinearLayout extends RelativeLayout {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.e("aa", ">>>>>>>>>>>>>>LinearLayout----onTouchEvent");
+        Log.e("aa", ">>>>>>>>>>>>>>MyExtraLinearLayout----onTouchEvent");
         return true;
     }
 }
