@@ -27,7 +27,7 @@
             android:value="${CHANNEL_ID_VALUE}" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".MainUIActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,9 +63,6 @@
             android:name=".PopubWindowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".diyview.TreasureViewActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".gson.GsonActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -91,8 +88,6 @@
         <!-- </intent-filter> -->
         <!-- </receiver> -->
         <activity android:name=".fragment.MFragmentActivity" />
-        <activity android:name=".MyViewActivity" />
-        <activity android:name=".diyview.MyViewItemActivity" />
         <activity
             android:name=".MyTransParenceActivity"
             android:theme="@style/AppThansParentThream" />
@@ -101,7 +96,6 @@
         <activity android:name=".MyCamera2Activity" />
         <activity android:name=".MainTouchActivity" />
         <activity android:name=".MyWebViewActivity" />
-        <activity android:name=".RecyclerViewDecorationActivity" />
         <activity android:name=".MethodRangeActivity" />
 
         <!-- bugly热修复之配置 -->
@@ -120,7 +114,14 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".VolumeActivity"></activity>
+        <activity android:name=".VolumeActivity" />
+        <activity
+            android:name=".ViewPagerFlipperActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".MainFragment"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

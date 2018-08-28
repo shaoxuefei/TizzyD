@@ -5,11 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/gray_9"
     android:orientation="vertical"
-    tools:context="com.shanlin.sxf.RecyclerViewDecorationActivity">
+    tools:context="com.shanlin.sxf.RecyclerViewDecorationFragment">
 
-
-    <com.shanlin.sxf.diyview.SwipeMenuListView
-        android:id="@+id/menuListView"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+
+        <com.shanlin.sxf.diyview.SwipeMenuListView
+            android:id="@+id/menuListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

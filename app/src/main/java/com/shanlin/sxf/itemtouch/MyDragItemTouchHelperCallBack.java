@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
 
-import com.shanlin.sxf.RecyclerViewDecorationActivity;
+import com.shanlin.sxf.RecyclerViewDecorationFragment;
 
 /**
  * @author : SXF
@@ -15,9 +15,9 @@ import com.shanlin.sxf.RecyclerViewDecorationActivity;
 
 public class MyDragItemTouchHelperCallBack extends ItemTouchHelper.Callback {
 
-    RecyclerViewDecorationActivity.ScrollMyAdapter scrollMyAdapter;
+    RecyclerViewDecorationFragment.ScrollMyAdapter scrollMyAdapter;
 
-    public MyDragItemTouchHelperCallBack(RecyclerViewDecorationActivity.ScrollMyAdapter scrollMyAdapter) {
+    public MyDragItemTouchHelperCallBack(RecyclerViewDecorationFragment.ScrollMyAdapter scrollMyAdapter) {
         this.scrollMyAdapter = scrollMyAdapter;
     }
 

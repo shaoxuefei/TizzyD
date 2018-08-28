@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
  */
 
 public class MyExtraLinearLayout extends RelativeLayout {
+
 
     public MyExtraLinearLayout(Context context) {
         super(context);
@@ -43,7 +45,7 @@ public class MyExtraLinearLayout extends RelativeLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         Log.e("aa", ">>>>>>>>>>>>>>MyExtraLinearLayout----dispatchTouchEvent");
-        return false;
+        return super.dispatchTouchEvent(ev);
     }
 
     /**
@@ -71,4 +73,6 @@ public class MyExtraLinearLayout extends RelativeLayout {
         Log.e("aa", ">>>>>>>>>>>>>>MyExtraLinearLayout----onTouchEvent");
         return true;
     }
+
+
 }

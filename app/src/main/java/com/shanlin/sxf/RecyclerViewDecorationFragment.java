@@ -2,10 +2,13 @@ package com.shanlin.sxf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shanlin.sxf.diyview.RecyclerViewDivider;
 import com.shanlin.sxf.diyview.SwipeMenuLayout;
 import com.shanlin.sxf.diyview.SwipeMenuListView;
@@ -26,10 +33,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewDecorationActivity extends AppCompatActivity {
+public class RecyclerViewDecorationFragment extends BaseFragment {
 
     @BindView(R.id.menuListView)
     SwipeMenuListView menuListView;
+    @BindView(R.id.smartLayout)
+    SmartRefreshLayout relayout;
+
 
     ScrollMyAdapter scrollMyAdapter;
 
@@ -40,29 +50,64 @@ public class RecyclerViewDecorationActivity extends AppCompatActivity {
     public String[] strings = new String[]{"张三", "李四", "王五", "赵六", "曾七"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scroll_compat);
-        ButterKnife.bind(this);
-        menuListView.setLayoutManager(new LinearLayoutManager(this));
+    public int getLayoutId() {
+        Log.e("aa", "RecyclerViewDecorationFragment----onCreateView");
+        return R.layout.activity_scroll_compat;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.e("aa", "RecyclerViewDecorationFragment-----onViewCreated");
+    }
+
+    @Override
+    public void initView(View inflate) {
+        initView();
+    }
+
+    public static RecyclerViewDecorationFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        RecyclerViewDecorationFragment fragment = new RecyclerViewDecorationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private void initView() {
+        menuListView.setLayoutManager(new LinearLayoutManager(getContext()));
         menuListView.addItemDecoration(new RecyclerViewDivider());
         scrollMyAdapter = new ScrollMyAdapter();
         menuListView.setAdapter(scrollMyAdapter);
         itemTouchHelperCallBack = new MyDragItemTouchHelperCallBack(scrollMyAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallBack);
         itemTouchHelper.attachToRecyclerView(menuListView);
-
         for (int i = 0; i < 20; i++) {
             dataList.add(i + strings[i % strings.length]);
         }
 
+        relayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                //refresh
+                relayout.finishRefresh(2000);
+            }
+        });
+        relayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                //load
+                relayout.finishLoadmore(2000);
+            }
+        });
     }
 
     public class ScrollMyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MyViewHolder(LayoutInflater.from(RecyclerViewDecorationActivity.this).inflate(R.layout.scroll_item_layout, parent, false));
+            return new MyViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.scroll_item_layout, parent, false));
         }
 
         @Override
@@ -74,8 +119,8 @@ public class RecyclerViewDecorationActivity extends AppCompatActivity {
             myViewHolder.tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(RecyclerViewDecorationActivity.this, "" + position + "--" + myViewHolder.tvTitle.getText(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RecyclerViewDecorationActivity.this, VolumeActivity.class);
+                    Toast.makeText(getContext(), "" + position + "--" + myViewHolder.tvTitle.getText(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), VolumeActivity.class);
                     startActivity(intent);
                 }
             });
@@ -116,39 +161,36 @@ public class RecyclerViewDecorationActivity extends AppCompatActivity {
                 swipeLayout = itemView.findViewById(R.id.swipeLayout);
             }
         }
-    }
-
-
-    /**
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
 
     }
 
-    /**
-     * if (mWindow.shouldCloseOnTouch(this, event)) {
-     * finish();
-     * return true;
-     * }
-     * return false;
-     *
-     * @param event
-     * @return 默认是在点击非页面外部区域--都是false
-     */
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("aa", "RecyclerViewDecorationFragment-----onDestroyView");
+    }
 
-        return super.onTouchEvent(event);
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("aa", "RecyclerViewDecorationFragment-----onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("aa", "RecyclerViewDecorationFragment-----onPause");
+    }
+
+
+    @Override
+    public void fragmentIsVisible(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            Toast.makeText(getContext(), "RecyclerViewDecorationFragment--LoadData", Toast.LENGTH_SHORT).show();
+            Log.e("aa", "RecyclerViewDecorationFragment-----isShow");
+        } else {
+            Log.e("aa", "RecyclerViewDecorationFragment-----isHide");
+        }
     }
 
 

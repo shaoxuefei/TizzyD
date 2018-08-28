@@ -16,7 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.shanlin.sxf.MainActivity;
 import com.shanlin.sxf.R;
 import com.tencent.stat.StatService;
 

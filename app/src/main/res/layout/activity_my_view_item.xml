@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shanlin.sxf.diyview.MyViewItemActivity">
+    tools:context="com.shanlin.sxf.diyview.MyViewItemFragment">
 
     <com.shanlin.sxf.diyview.MyView
         android:id="@+id/myView"
