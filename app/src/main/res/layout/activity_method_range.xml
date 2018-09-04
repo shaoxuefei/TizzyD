@@ -20,5 +20,89 @@
         android:text="ADD"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <Button
+        android:id="@+id/btn_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TestLog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_btn" />
+
+    <Button
+        android:id="@+id/btn_compress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="compress"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_log"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_log" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_compress">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/guideLine" />
+
+            <ImageView
+                android:id="@+id/image_right"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                app:layout_constraintLeft_toRightOf="@+id/guideLine"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image" />
+
+
+            <ImageView
+                android:id="@+id/image_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_right" />
+
+            <ImageView
+                android:id="@+id/image_right_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_bottom" />
+
+            <ImageView
+                android:id="@+id/image_divider_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/image_right_bottom" />
+
+            <TextView
+                android:id="@+id/tv_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片大小尺寸压缩宽>高按照宽为参照物（宽和高一起相同比例压缩），反之高>宽按照高度为参作物压缩"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/image_right_bottom" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

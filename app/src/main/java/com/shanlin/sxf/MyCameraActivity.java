@@ -36,6 +36,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static android.hardware.camera2.CameraCharacteristics.*;
+
 public class MyCameraActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
     private MyDiyImageView myDiyImageView;
     private TextureView surfaceView;
@@ -52,6 +54,8 @@ public class MyCameraActivity extends AppCompatActivity implements TextureView.S
     }
 
     private void initView() {
+        camera = Camera.open();
+
         image = findViewById(R.id.image);
         extraBtn = (Button) findViewById(R.id.extraBtn);
         extraBtn.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +194,7 @@ public class MyCameraActivity extends AppCompatActivity implements TextureView.S
     }
 
     private void startsPreview() {
-        camera = Camera.open(CameraCharacteristics.LENS_FACING_BACK);
+        camera = Camera.open();
         try {
             camera.setPreviewTexture(surfaceView.getSurfaceTexture());
             setLayout();
@@ -203,7 +207,6 @@ public class MyCameraActivity extends AppCompatActivity implements TextureView.S
     @Override
     protected void onResume() {
         super.onResume();
-        camera = Camera.open(CameraCharacteristics.LENS_FACING_BACK);
     }
 
     private void checkPermission() {

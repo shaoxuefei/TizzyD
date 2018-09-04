@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +42,8 @@ public class RecyclerViewDecorationFragment extends BaseFragment {
     SwipeMenuListView menuListView;
     @BindView(R.id.smartLayout)
     SmartRefreshLayout relayout;
+    @BindView(R.id.nestScrollView)
+    NestedScrollView nestScrollView;
 
 
     ScrollMyAdapter scrollMyAdapter;
@@ -101,6 +106,23 @@ public class RecyclerViewDecorationFragment extends BaseFragment {
                 relayout.finishLoadmore(2000);
             }
         });
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        Display defaultDisplay = getActivity().getWindowManager().getDefaultDisplay();
+        defaultDisplay.getMetrics(displayMetrics);
+        final float density = displayMetrics.density;
+        nestScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.e("aa", "scrollY" + scrollY);
+                if (scrollY < density * 130) {
+                    nestScrollView.setNestedScrollingEnabled(false);
+                } else {
+                    nestScrollView.setNestedScrollingEnabled(true);
+                }
+            }
+        });
+
     }
 
     public class ScrollMyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

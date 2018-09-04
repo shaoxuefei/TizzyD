@@ -3,6 +3,7 @@ package com.shanlin.sxf;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
@@ -69,6 +70,9 @@ public class MainUIActivity extends AppCompatActivity {
             TextView tabTv = inflate.findViewById(R.id.tab_tv);
             tabIv.setBackgroundResource(tabRes[i]);
             tabTv.setText(strings[i]);
+            if (i == 0) {
+                tabTv.setTextColor(Color.RED);
+            }
             tab.setCustomView(inflate);
             tabLayout.addTab(tab);
         }

@@ -146,6 +146,7 @@ public class YuanBingView extends View {
             /**
              * 绘制-表
              * 再次声明  canvas.drawText是Y轴的值文字的baseLine的坐标
+             * canvas.drawLine(),也及时是中心点的坐标，也就是中间的坐标、、比较明显的是当lineWidth大于1dp类似于画柱状图的时候，
              */
             if (keyPaint == null) {
                 keyPaint = new Paint();

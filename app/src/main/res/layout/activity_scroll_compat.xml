@@ -7,26 +7,51 @@
     android:orientation="vertical"
     tools:context="com.shanlin.sxf.RecyclerViewDecorationFragment">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartLayout"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/black"
+                android:gravity="bottom"
+                android:text="CONTENT"
+                android:textColor="@color/white" />
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smartLayout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <com.shanlin.sxf.diyview.SwipeMenuListView
-            android:id="@+id/menuListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <com.shanlin.sxf.diyview.SwipeMenuListView
+                android:id="@+id/menuListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 </LinearLayout>

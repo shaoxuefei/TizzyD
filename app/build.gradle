@@ -4,12 +4,12 @@ apply plugin: 'com.android.application'
 File signPropertiesFile = rootProject.file(STORE_FILE)
 android {
 
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.shanlin.sxf"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         //这种地方如果不添加as int的话，好像编译过去
         versionCode VERSION_CODE as int
         versionName VERSION_NAME
@@ -107,7 +107,7 @@ dependencies {
     //retrofit(Okhttp)+Rxjava
     compile files('libs/deviceid_1.0.jar')
     compile project(':multiple-images-selector')
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
@@ -147,4 +147,7 @@ dependencies {
     //可视化埋点的相关jar包 （根据需要添加），可视化埋点的版本号，和必须和当前MTA的版本号必须匹配使用 需要在配置文件中增加配置，具体请参考 高级功能中可视化埋点的接入。
     compile 'com.qq.visual:visual:3.3.1-release'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

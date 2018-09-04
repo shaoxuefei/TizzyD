@@ -159,6 +159,8 @@ public class PictureActivity extends AppCompatActivity {
 
     //根据Uri查找File文件是否存在
     public File getFileFromMediaUri(Uri uri) {
+
+
         if (uri.getScheme().toString().compareTo("content") == 0) {
             ContentResolver contentResolver = getContentResolver();
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
@@ -191,12 +193,17 @@ public class PictureActivity extends AppCompatActivity {
     }
 
 
-    //对图片的大小进行压缩
+    //对图片的大小进行压缩、、、decode 解码
     public Bitmap compressionSizePicture(Uri uri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
             BitmapFactory.Options options = new BitmapFactory.Options();
             //进入测试调节模式--只是为了获取图片的大小信息--因此减少了多一次的绘制
+            /**
+             * If set to true, the decoder will return null (no bitmap), but
+             * the <code>out...</code> fields will still be set, allowing the caller to
+             * query the bitmap without having to allocate the memory for its pixels.
+             */
             options.inJustDecodeBounds = true;
             options.inDither = true;
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -217,9 +224,29 @@ public class PictureActivity extends AppCompatActivity {
             if (outHeight > outWidth && outHeight > height) {
                 compareSize = (int) (outHeight / height);
             }
+//            //TODO 另一种情况、将图片缩放成给定的比例
+//            if (outHeight > outWidth) {
+//                //宽不变、变高
+//                float v = outWidth / (width / (width + height));
+//                float needHeight = v * (height / (width + height));
+//                //高度的缩放比例
+//                float heightDex = needHeight / height;
+//            } else {
+//                //高不变、变宽
+//                float v = outHeight / (height / (width + height));
+//                float needWidth = v * (height / (width + height));
+//                //宽度的缩放比例
+//                float widthDex = needWidth / width;
+//            }
+//           //这种等比缩放、对Bitmap的大小没影响、只是改变了宽高的尺寸，整体图片的比例还是原来的比例、、而且图片也不存在裁剪
+//            //TODO 另一种情况、将图片缩放到给定的尺寸
+
+
             if (compareSize <= 0) {
                 compareSize = 1;
             }
+            //等比缩放--就是保持原图片比例不变--但是上边的情况会有个问题、(int)类型基本保持不了有效值
+            options.inJustDecodeBounds = false;
             BitmapFactory.Options options1 = new BitmapFactory.Options();
             options1.inSampleSize = compareSize;
             options1.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -258,7 +285,6 @@ public class PictureActivity extends AppCompatActivity {
             int attributeInt = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch (attributeInt) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
-
                     degress = 90;
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_180:
