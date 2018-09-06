@@ -24,6 +24,7 @@ import com.shanlin.sxf.utils.PicUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +56,7 @@ public class MethodRangeActivity extends AppCompatActivity implements MethodRang
 
     MethodRangePresenter rangePresenter;
     List<MethodBean> resourceList;
+    LinkedList<MethodBean> linkedList;
     PicUtils picUtils;
 
     int i = 0;
@@ -70,6 +72,11 @@ public class MethodRangeActivity extends AppCompatActivity implements MethodRang
     }
 
     private void initView() {
+        linkedList=new LinkedList<>();
+        MethodBean methodBean = linkedList.removeFirst();
+        MethodBean remove = linkedList.remove(0);
+
+
         rangePresenter = new MethodRangePresenter(this, this);
         resourceList = new ArrayList<>();
         String url = "http://ww1.sinaimg.cn/large/c82e4122gy1fux9m28xkmj20ev083tgp.jpg";
