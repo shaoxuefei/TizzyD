@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".application.MyApplication"
@@ -53,9 +54,6 @@
         <activity
             android:name=".paint.PaintActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".SingerActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".SeekBarActivity"
             android:screenOrientation="portrait" />
@@ -122,6 +120,14 @@
         <activity
             android:name=".MainFragment"
             android:screenOrientation="portrait" />
+
+        <service android:name=".service.MyVideoPlayService">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIDEO_PLAY_SERVICE" />
+            </intent-filter>
+
+        </service>
     </application>
 
 </manifest>

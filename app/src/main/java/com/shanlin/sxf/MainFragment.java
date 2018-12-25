@@ -2,24 +2,22 @@ package com.shanlin.sxf;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
+import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,10 +29,13 @@ import com.shanlin.sxf.dialog.MyDialogFragment;
 import com.shanlin.sxf.diyview.ItemClickCallBack;
 import com.shanlin.sxf.diyview.MyGroupItemView;
 import com.shanlin.sxf.diyview.MyViewGroup;
-import com.shanlin.sxf.diyview.TreasureViewFragment;
+import com.shanlin.sxf.enums.EnumBean;
 import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
+import com.shanlin.sxf.service.MyVideoPlayService;
+import com.shanlin.sxf.utils.FloatMessageWindow;
+import com.shanlin.sxf.utils.MediaPlayUtils;
 import com.tencent.stat.StatService;
 
 import java.io.File;
@@ -52,6 +53,9 @@ import rx.schedulers.Schedulers;
 public class MainFragment extends BaseFragment {
     private LinearLayout linearRoot;
     private MyViewGroup myViewGroup;
+    private StringBuilder stringBuilder;
+    private StringBuffer stringBuffer;
+    private String defaultFinalStr;
 
     @Override
     public int getLayoutId() {
@@ -69,25 +73,45 @@ public class MainFragment extends BaseFragment {
     @Override
     public void initView(View inflate) {
         initMyViewGroup(inflate);
+
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("1");
+        stringBuilder.append("2");
+
+
+        stringBuffer = new StringBuffer();
+        stringBuffer.append("1");
+        stringBuffer.append("2");
+
+
     }
+
+    BindServiceConnected serviceConnected;
 
     private void initMyViewGroup(View inflate) {
         linearRoot = (LinearLayout) inflate.findViewById(R.id.linearRoot);
         initContentView();
-        checkPermission();
+        checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         Toast.makeText(getContext(), "TENCENT_PATCH_HOT", Toast.LENGTH_SHORT).show();
         myViewGroup = (MyViewGroup) inflate.findViewById(R.id.myViewGroup);
-        myViewGroup.addView(new MyGroupItemView(getContext(), "随性一笔"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "SeekBar"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "PopWindow-List"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "gson/fastJson-特殊字符转译"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "Rxjava-请求示例"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "Pic选择"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "DialogFragment"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "跳转App"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "事件分析"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "重定项-URL2JS"));
-        myViewGroup.addView(new MyGroupItemView(getContext(), "方法作用域"));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB01").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB02").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB03").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB04").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB05").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB06").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB07").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB08").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB09").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB10").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB11").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
+
+
+        EnumBean tab01 = EnumBean.TAB01;
+        EnumBean enumBean = EnumBean.valueOf("TAB01");
+        EnumBean[] values = EnumBean.values();
+        serviceConnected = new BindServiceConnected();
         myViewGroup.setCallBack(new ItemClickCallBack() {
             @Override
             public void onItemClick(int position) {
@@ -144,6 +168,19 @@ public class MainFragment extends BaseFragment {
                         Intent intent13 = new Intent(getContext(), MethodRangeActivity.class);
                         startActivity(intent13);
                         break;
+                    case 11:
+//                        String voicePath = Environment.getExternalStorageDirectory() + "/msc/tts.wav";
+//                        mediaPlayer.startPlay(voicePath);
+//                        if (serviceConnected != null && isConnected) {
+//                            getContext().unbindService(serviceConnected);
+//                        }
+//                        Intent intentService = new Intent("android.intent.action.VIDEO_PLAY_SERVICE");
+//                        intentService.setPackage(BuildConfig.APPLICATION_ID);
+//                        getContext().bindService(intentService, serviceConnected, Context.BIND_AUTO_CREATE);
+
+                        FloatMessageWindow.getInstance(getContext()).showWindows();
+
+                        break;
                     default:
                         break;
                 }
@@ -152,6 +189,36 @@ public class MainFragment extends BaseFragment {
         });
     }
 
+    MyVideoPlayService.MyBinder myBinder;
+    boolean isConnected;
+
+    class BindServiceConnected implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (MyVideoPlayService.MyBinder) service;
+            isConnected = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isConnected = false;
+        }
+    }
+
+
+    private void doInitVideo() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(getContext())) {
+                //若未授权则请求权限
+                Intent intent14 = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                intent14.setData(Uri.parse("package:" + getContext().getPackageName()));
+                this.startActivity(intent14);
+            } else {
+                FloatMessageWindow.getInstance(getContext()).showWindows();
+            }
+        }
+    }
 
     public ImageView image;
     private Button btnSign;
@@ -219,9 +286,12 @@ public class MainFragment extends BaseFragment {
 
     }
 
-    private void checkPermission() {
+    private boolean checkPermission(String permission) {
         if (!(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, 10);
+            return false;
+        } else {
+            return true;
         }
     }
 

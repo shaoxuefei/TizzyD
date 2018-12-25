@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shanlin.sxf.BuildConfig;
 import com.shanlin.sxf.crash.DIYCrashHandler;
+import com.shanlin.sxf.utils.FloatMessageWindow;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -180,6 +181,7 @@ public class MyApplication extends Application {
         public void onActivityStarted(Activity activity) {
             if (activityStartCount == 0) {
                 Log.e("app", "App Back to Front");
+                FloatMessageWindow.getInstance(getContext()).addFloatView();
             }
             activityStartCount++;
         }
@@ -202,6 +204,9 @@ public class MyApplication extends Application {
             activityStartCount--;
             if (activityStartCount == 0) {
                 Log.e("app", "App Front to Back");
+                //APP进去后台 清空
+                FloatMessageWindow.getInstance(getContext()).removeFloatingView();
+
             }
         }
 

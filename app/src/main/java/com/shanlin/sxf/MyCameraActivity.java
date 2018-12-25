@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 
 import com.shanlin.sxf.diyview.MyDiyImageView;
 import com.shanlin.sxf.picture.FileUtil;
+import com.shanlin.sxf.utils.FloatMessageWindow;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,6 +52,7 @@ public class MyCameraActivity extends AppCompatActivity implements TextureView.S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_camera);
         checkPermission();
+        FloatMessageWindow.getInstance(this).showWindows();
     }
 
     private void initView() {

@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +18,10 @@ public class MyWebViewActivity extends AppCompatActivity {
 
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.tv_reload)
+    TextView tv_reload;
+
+    String[] strings = new String[]{"2018-10-26", "2018-10-19", "2018-10-12"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,16 @@ public class MyWebViewActivity extends AppCompatActivity {
         initWebView(webView);
         //http://tg.zhaohaogu.cn/teacher.html
         webView.loadUrl("http://tg.zhaohaogu.cn/teacher.html");
+
+
+        tv_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String date = strings[(int) (Math.random() * 2)];
+                webView.loadUrl("http://192.168.152.156:9000/#/stock/report?group=11&date=" + date);
+                tv_reload.setText(date);
+            }
+        });
     }
 
     private void initWebView(WebView mWebView) {
