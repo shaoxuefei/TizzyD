@@ -80,7 +80,7 @@ public class FloatMessageWindow implements DiyFloatView.OnItemClickListener {
 
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
-        layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION;
 
         //窗口级别
         //这种是在每个应用的上方显示，需要SYSTEM_ALERT_WINDOW权限、这种适合用于App外部浮窗

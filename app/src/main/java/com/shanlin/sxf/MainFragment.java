@@ -272,6 +272,7 @@ public class MainFragment extends BaseFragment {
                 //子线程startActivity()需要开启个新栈，防止跟主线程activity冲突
                 getActivity().startService(new Intent());//service默认是运行在mainThread 中
             }
+
         });
     }
 
