@@ -83,7 +83,7 @@ public class MainFragment extends BaseFragment {
         stringBuffer.append("1");
         stringBuffer.append("2");
 
-
+        Log.e("aa", "我是在Native分支修改的东西,现在切换master，但是暂时不想合并到master");
     }
 
     BindServiceConnected serviceConnected;
