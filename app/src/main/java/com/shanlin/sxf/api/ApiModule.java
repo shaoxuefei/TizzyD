@@ -16,32 +16,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiModule {
-    OkHttpClient httpClient;
+    public OkHttpClient httpClient;
     Retrofit retrofit;
-    String baseUrl="http://121.43.163.141:8080/";
+    String baseUrl = "http://121.43.163.141:8080/";
     static ApiModule apiModule;
 
-    private void ApiModule(){}
-    public static ApiModule getInstance(){
-        if(apiModule==null){
-            apiModule=new ApiModule();
+    private void ApiModule() {
+    }
+
+    public static ApiModule getInstance() {
+        if (apiModule == null) {
+            apiModule = new ApiModule();
         }
         return apiModule;
     }
 
     public void createOkHttp() {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        HttpLoggingInterceptor interceptor=new HttpLoggingInterceptor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-       builder.connectTimeout(30000, TimeUnit.MILLISECONDS)
+        builder.connectTimeout(30000, TimeUnit.MILLISECONDS)
                 .readTimeout(60000, TimeUnit.MILLISECONDS)
                 .addInterceptor(interceptor)
                 .build();
         httpClient = builder.build();
     }
 
-    public void createRetrofit(){
-        Retrofit.Builder builder=new Retrofit.Builder();
+    public void createRetrofit() {
+        Retrofit.Builder builder = new Retrofit.Builder();
         retrofit = builder
                 .baseUrl(baseUrl)
                 .client(httpClient)
@@ -51,12 +53,12 @@ public class ApiModule {
 
     }
 
-    public   ApiUrl getApiUrl(){
-        if(httpClient==null){
+    public ApiUrl getApiUrl() {
+        if (httpClient == null) {
             createOkHttp();
         }
 
-        if (retrofit==null){
+        if (retrofit == null) {
             createRetrofit();
         }
         ApiUrl apiUrl = retrofit.create(ApiUrl.class);

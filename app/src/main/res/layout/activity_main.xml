@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.shanlin.sxf.MainFragment">
+    tools:context="com.shanlin.sxf.fragment.MainFragment">
 
     <com.shanlin.sxf.diyview.MyViewGroup
         android:id="@+id/myViewGroup"

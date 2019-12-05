@@ -12,4 +12,6 @@
     <color name="gray_9">#999999</color>
 
     <color name="c_F1F1F1">#f1f1f1</color>
+
+    <color name="transparent">#00FFFFFF</color>
 </resources>

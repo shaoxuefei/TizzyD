@@ -5,14 +5,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shanlin.sxf.BeanInfo;
 import com.shanlin.sxf.R;
+import com.shanlin.sxf.api.ApiModule;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.TreeMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Sxf on 2017/5/18.
@@ -21,8 +31,9 @@ import java.util.TreeMap;
  * @detail:
  */
 public class GsonActivity extends AppCompatActivity implements View.OnClickListener {
-    private String json="{\"busicode\":\"00001\",\"devicecode\":\"ad7/6RD+UMueHVS5Q2TbimAFbaSSDG76YW7EWAE\\u003dbdfDFDFDJL5DDF4\",\"mercode\":\"201703280000010\",\"orgcode\":\"000000020170508\",\"proname\":\"善林\",\"reqtime\":\"20170516144831\",\"sign\":\"5A6C10CA3719882E064342DD119DFAE3\"}";
-    private TextView button,buton1,button2,text,text1,text2,jsonString;
+    private String json = "{\"busicode\":\"00001\",\"devicecode\":\"ad7/6RD+UMueHVS5Q2TbimAFbaSSDG76YW7EWAE\\u003dbdfDFDFDJL5DDF4\",\"mercode\":\"201703280000010\",\"orgcode\":\"000000020170508\",\"proname\":\"善林\",\"reqtime\":\"20170516144831\",\"sign\":\"5A6C10CA3719882E064342DD119DFAE3\"}";
+    private TextView button, buton1, button2, text, text1, text2, jsonString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +41,11 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initGson();
     }
+
     String strUtf;
-    private void initGson(){
-        Gson gson=new Gson();
+
+    private void initGson() {
+        Gson gson = new Gson();
         BeanInfo beanInfo = gson.fromJson(json, BeanInfo.class);
         /**
          * 会自动将特殊字符转换成Unicode编码-->>“=”-》\u003d
@@ -42,8 +55,8 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
         byte[] bytes = new byte[0];
         try {
             bytes = toJson.getBytes("UTF-8");
-            strUtf=new String(bytes,"UTF-8");
-            Log.e("aa",strUtf);
+            strUtf = new String(bytes, "UTF-8");
+            Log.e("aa", strUtf);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -56,7 +69,7 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
          * disableHtmlEscaping--是使将对象转换成JsonString时里边的参数的特殊字符不被转译成UNICODE--因为Gson内部转换是和浏览器相关的
          */
 //        Gson gson1=new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-        Gson gson1=new GsonBuilder().disableHtmlEscaping().create();
+        Gson gson1 = new GsonBuilder().disableHtmlEscaping().create();
         /**
          * 会自动在每一个属性的组合对中每一组合对加\n的换行符
          */
@@ -73,7 +86,7 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
          */
         //这种的话-参数中的/-转译为-->\/
         String jsonString = beanInfo.getJsonString();
-        Log.e("aa","jsonString--"+jsonString);
+        Log.e("aa", "jsonString--" + jsonString);
         //---会直接把你对象中的方法生成的String也当场key：value转成JsonString一部分--贼JB奇怪
         String fastJson = JSONObject.toJSONString(beanInfo);
 
@@ -81,16 +94,38 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
 
 
         TreeMap treeMap2 = JSONObject.parseObject(fastJson, TreeMap.class);
+
+
+        ApiModule.getInstance().createOkHttp();
+        OkHttpClient httpClient = ApiModule.getInstance().httpClient;
+        Request request = new Request.Builder().url("http://ggservice.sandbox.gofund.com.cn/v1/ft_info/list_myfavor?app_key=GGHvCBMappzQWEg&rows=20&sign=XRiwA4%2F%2BsZD1MCZGzuWCr4Zqv4M%3D%0A&token=447cc8d697984d1d86325a4c17643a2d&page=1&time_stamp=1552286773")
+                .build();
+        httpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(GsonActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
-    private void initView(){
-        buton1= (TextView) findViewById(R.id.button1);
-        button= (TextView) findViewById(R.id.button);
-        button2= (TextView) findViewById(R.id.button2);
-        text= (TextView) findViewById(R.id.text);
-        text1= (TextView) findViewById(R.id.text1);
-        text2= (TextView) findViewById(R.id.text2);
-        jsonString= (TextView) findViewById(R.id.jsonString);
+    private void initView() {
+        buton1 = (TextView) findViewById(R.id.button1);
+        button = (TextView) findViewById(R.id.button);
+        button2 = (TextView) findViewById(R.id.button2);
+        text = (TextView) findViewById(R.id.text);
+        text1 = (TextView) findViewById(R.id.text1);
+        text2 = (TextView) findViewById(R.id.text2);
+        jsonString = (TextView) findViewById(R.id.jsonString);
         jsonString.setText(json);
         button.setOnClickListener(this);
         buton1.setOnClickListener(this);
@@ -100,16 +135,16 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        Gson gson=new Gson();
+        Gson gson = new Gson();
         BeanInfo beanInfo = gson.fromJson(json, BeanInfo.class);
-        if(id==R.id.button){
+        if (id == R.id.button) {
             String s = gson.toJson(beanInfo);
             text.setText(s);
-        }else if(id==R.id.button1){
-            Gson gson1=new GsonBuilder().disableHtmlEscaping().create();
+        } else if (id == R.id.button1) {
+            Gson gson1 = new GsonBuilder().disableHtmlEscaping().create();
             String s = gson1.toJson(beanInfo);
             text1.setText(s);
-        }else if(id==R.id.button2){
+        } else if (id == R.id.button2) {
             String string = JSONObject.toJSONString(beanInfo);
             text2.setText(string);
         }

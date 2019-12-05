@@ -105,7 +105,7 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB09").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB10").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB11").getEnumName()));
-        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
+//        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
 
 
         EnumBean tab01 = EnumBean.TAB01;

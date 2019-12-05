@@ -30,5 +30,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="TranslucentTheme" parent="AppTheme" />
+    <style name="TranslucentTheme" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />
 </resources>
