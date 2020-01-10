@@ -19,6 +19,10 @@ import com.shanlin.sxf.R;
 public class MyGroupItemView extends LinearLayout {
     TextView btn;
 
+    public MyGroupItemView(Context context) {
+        super(context);
+    }
+
     public MyGroupItemView(Context context, String btnTxt) {
         this(context, null, btnTxt);
     }

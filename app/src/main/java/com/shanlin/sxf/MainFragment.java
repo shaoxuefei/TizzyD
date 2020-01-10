@@ -105,7 +105,9 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB09").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB10").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB11").getEnumName()));
-//        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB13").getEnumName()));
+
 
 
         EnumBean tab01 = EnumBean.TAB01;
@@ -180,6 +182,11 @@ public class MainFragment extends BaseFragment {
 
                         FloatMessageWindow.getInstance(getContext()).showWindows();
 
+                        break;
+
+                    case 12:
+                        Intent intent14=new Intent(getContext(),ViewScrollVelocityTrackerActivity.class);
+                        startActivity(intent14);
                         break;
                     default:
                         break;
