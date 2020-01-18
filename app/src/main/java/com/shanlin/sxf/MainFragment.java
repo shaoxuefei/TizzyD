@@ -2,7 +2,6 @@ package com.shanlin.sxf;
 
 import android.Manifest;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -34,8 +33,8 @@ import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
 import com.shanlin.sxf.service.MyVideoPlayService;
+import com.shanlin.sxf.softkeybord.SoftInputChangeActivity;
 import com.shanlin.sxf.utils.FloatMessageWindow;
-import com.shanlin.sxf.utils.MediaPlayUtils;
 import com.tencent.stat.StatService;
 
 import java.io.File;
@@ -107,7 +106,7 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB11").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB13").getEnumName()));
-
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB14").getEnumName()));
 
 
         EnumBean tab01 = EnumBean.TAB01;
@@ -185,8 +184,12 @@ public class MainFragment extends BaseFragment {
                         break;
 
                     case 12:
-                        Intent intent14=new Intent(getContext(),ViewScrollVelocityTrackerActivity.class);
+                        Intent intent14 = new Intent(getContext(), ViewScrollVelocityTrackerActivity.class);
                         startActivity(intent14);
+                        break;
+                    case 13:
+                        Intent intent15 = new Intent(getContext(), SoftInputChangeActivity.class);
+                        startActivity(intent15);
                         break;
                     default:
                         break;

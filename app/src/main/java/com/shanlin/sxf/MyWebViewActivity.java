@@ -3,6 +3,7 @@ package com.shanlin.sxf;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -10,6 +11,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+
+import com.shanlin.sxf.softkeybord.KeySoftBordNormalView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +23,10 @@ public class MyWebViewActivity extends AppCompatActivity {
     WebView webView;
     @BindView(R.id.tv_reload)
     TextView tv_reload;
+    @BindView(R.id.tv_message)
+    TextView tv_message;
+    @BindView(R.id.softInputKey)
+    KeySoftBordNormalView keySoftBordNormalViewl;
 
     String[] strings = new String[]{"2018-10-26", "2018-10-19", "2018-10-12"};
 
@@ -41,6 +48,24 @@ public class MyWebViewActivity extends AppCompatActivity {
                 tv_reload.setText(date);
             }
         });
+
+
+        keySoftBordNormalViewl.setBaseActivity(this);
+        tv_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                keySoftBordNormalViewl.showSoftInputView(true, null);
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    keySoftBordNormalViewl.dismissSoftView();
+                }
+            });
+        }
     }
 
     private void initWebView(WebView mWebView) {

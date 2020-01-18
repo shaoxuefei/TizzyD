@@ -27,7 +27,9 @@ public enum EnumBean {
 
     TAB12(11, "语音播报"),
 
-    TAB13(12, "ViewScroll|VelocityTracker");
+    TAB13(12, "ViewScroll|VelocityTracker"),
+
+    TAB14(13, "InputWxEmoj");
 
     private String enumName;
     private int enumPosition;
