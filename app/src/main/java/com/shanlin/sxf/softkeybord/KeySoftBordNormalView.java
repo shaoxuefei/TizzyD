@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shanlin.sxf.R;
+import com.shanlin.sxf.application.MyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -313,8 +314,13 @@ public class KeySoftBordNormalView extends LinearLayout {
             Log.e("aa", "EmotionKeyboard--Warning: value of softInputHeight is below zero!");
         }
 //        //存一份到本地
-        if (softInputHeight > 0) {
+
+        if (softInputHeight > 0 && softInputHeight > screenHeight / 5) {
             InputWxHeight.softKeyBordHeight = softInputHeight;
+        }
+        //TODO 软键盘高度设置
+        if (softInputHeight > 0 && softInputHeight < screenHeight / 5) {
+            softInputHeight = 0;
         }
         return softInputHeight;
     }
