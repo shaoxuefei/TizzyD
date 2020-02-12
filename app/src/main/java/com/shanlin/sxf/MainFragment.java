@@ -33,6 +33,7 @@ import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
 import com.shanlin.sxf.service.MyVideoPlayService;
+import com.shanlin.sxf.softkeybord.NewSoftInputActivity;
 import com.shanlin.sxf.softkeybord.SoftInputChangeActivity;
 import com.shanlin.sxf.utils.FloatMessageWindow;
 import com.tencent.stat.StatService;
@@ -107,6 +108,7 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB12").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB13").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB14").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB15").getEnumName()));
 
 
         EnumBean tab01 = EnumBean.TAB01;
@@ -190,6 +192,10 @@ public class MainFragment extends BaseFragment {
                     case 13:
                         Intent intent15 = new Intent(getContext(), SoftInputChangeActivity.class);
                         startActivity(intent15);
+                        break;
+                    case 14:
+                        Intent intent16 = new Intent(getContext(), NewSoftInputActivity.class);
+                        startActivity(intent16);
                         break;
                     default:
                         break;

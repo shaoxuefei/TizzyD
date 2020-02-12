@@ -29,7 +29,10 @@ public enum EnumBean {
 
     TAB13(12, "ViewScroll|VelocityTracker"),
 
-    TAB14(13, "InputWxEmoj");
+    TAB14(13, "InputWxEmoj"),
+
+    TAB15(14, "NewInput");
+
 
     private String enumName;
     private int enumPosition;
