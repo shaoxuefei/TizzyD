@@ -60,7 +60,8 @@ public class NewSoftInputKeyBord extends LinearLayout {
     private String emojiStr = "emoji";
     private String textStr = "text";
     AppCompatActivity appCompatActivity;
-    public NewSoftInputKeyBord(Context context,AttributeSet attrs) {
+
+    public NewSoftInputKeyBord(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         inflate = LayoutInflater.from(context).inflate(R.layout.layout_new_soft, this, true);
@@ -113,10 +114,19 @@ public class NewSoftInputKeyBord extends LinearLayout {
                 } else if (oldBottom < bottom) {
                     int dexBottom = oldBottom - bottom;
                 }
-                if (oldBottom != 0 && bottom - oldBottom >=screenHeight/4) {
-                    dismissSoftView();
-                    hideEmojiView();
-                    tvEmoji.setText(emojiStr);
+                if (oldBottom != 0 && bottom - oldBottom >= screenHeight / 4) {
+//                    dismissSoftView();
+//                    hideEmojiView();
+//                    tvEmoji.setText(emojiStr);
+//                    //隐藏
+//                    editText.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            setVisibility(GONE);
+//                        }
+//                    }, 50);
+
+                    linear_translate.callOnClick();
                 }
                 Log.e("aa", "bottomY: " + bottom + "oldBottom Y " + oldBottom);
             }
@@ -127,7 +137,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
         hideSoftKeyBord();
     }
 
-    @OnClick({R.id.tv_emoji, R.id.tv_send,R.id.linear_translate})
+    @OnClick({R.id.tv_emoji, R.id.tv_send, R.id.linear_translate})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_emoji:
@@ -189,22 +199,22 @@ public class NewSoftInputKeyBord extends LinearLayout {
 //                }
                 hideSoftKeyBord();
                 hideEmojiView();
+                tvEmoji.setText(emojiStr);
 
                 editText.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //TODO 需要延迟设置windowSoftInputMode||setVisibility(GONE);
                         setVisibility(GONE);
-                        appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     }
-                },50);
+                }, 50);
+                appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 break;
         }
     }
 
 
     public void showSoftKeyBord() {
-//        appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setVisibility(VISIBLE);
         tvEmoji.setText(emojiStr);
         editText.setFocusable(true);
@@ -315,6 +325,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
      * @return
      */
     int screenHeight;
+
     private int getSupportSoftInputHeight() {
         Rect r = new Rect();
         /**
@@ -335,7 +346,6 @@ public class NewSoftInputKeyBord extends LinearLayout {
         if (Build.VERSION.SDK_INT >= 20) {
             // When SDK Level >= 20 (Android L), the softInputHeight will contain the height of softButtonsBar (if has)
             softInputHeight = softInputHeight - getSoftButtonsBarHeight();
-            Log.e("aa", "虚拟键Height:  " + getSoftButtonsBarHeight());
         }
 
         if (softInputHeight < 0) {
@@ -344,8 +354,8 @@ public class NewSoftInputKeyBord extends LinearLayout {
         //存一份到本地
         if (softInputHeight > 0 && softInputHeight > screenHeight / 4) {
             InputWxHeight.softKeyBordHeight = softInputHeight;
-        }else {
-            softInputHeight=0;
+        } else {
+            softInputHeight = 0;
         }
         return softInputHeight;
     }
@@ -382,11 +392,11 @@ public class NewSoftInputKeyBord extends LinearLayout {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode()==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0&&getVisibility()==VISIBLE){
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && getVisibility() == VISIBLE) {
             linear_translate.callOnClick();
             return false;
         }
-        Toast.makeText(appCompatActivity,"dispatchKeyEvent",Toast.LENGTH_SHORT).show();
+        Toast.makeText(appCompatActivity, "dispatchKeyEvent", Toast.LENGTH_SHORT).show();
         return super.dispatchKeyEvent(event);
     }
 
