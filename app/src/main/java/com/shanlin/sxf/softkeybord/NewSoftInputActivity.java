@@ -2,9 +2,7 @@ package com.shanlin.sxf.softkeybord;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shanlin.sxf.R;
 
@@ -38,5 +36,13 @@ public class NewSoftInputActivity extends AppCompatActivity {
     @OnClick(R.id.tv_write)
     public void onViewClicked() {
         softInputKeybord.showSoftKeyBord();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (softInputKeybord.linear_translate != null) {
+            softInputKeybord.linear_translate.callOnClick();
+        }
     }
 }

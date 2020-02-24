@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
     private String emojiStr = "emoji";
     private String textStr = "text";
     AppCompatActivity appCompatActivity;
+    private long softAnimationTime = 60;
 
     public NewSoftInputKeyBord(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -154,16 +156,14 @@ public class NewSoftInputKeyBord extends LinearLayout {
                     } else {
                         showEmojiView();
                     }
-                    //延迟获取软键盘的高度
                     editText.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         }
-                    }, 200);
+                    }, softAnimationTime);
                     tvEmoji.setText(textStr);
                 } else if (textStr.equals(tvStr)) {
-                    //TODO
                     appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
                     //固定View的高度
                     lockViewHeight();
@@ -172,14 +172,13 @@ public class NewSoftInputKeyBord extends LinearLayout {
                     showSoftKeyBord();
                     unLockViewHeight();
                     tvEmoji.setText(emojiStr);
-                    //延迟获取软键盘的高度
                     editText.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             hideEmojiView();
                             appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         }
-                    }, 200);
+                    }, softAnimationTime);
                 }
                 break;
             case R.id.tv_send:
@@ -199,22 +198,25 @@ public class NewSoftInputKeyBord extends LinearLayout {
 //                }
                 hideSoftKeyBord();
                 hideEmojiView();
+                if (tvEmoji.getText().equals(textStr)) {
+                    setVisibility(GONE);
+                } else {
+                    editText.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setVisibility(GONE);
+                        }
+                    }, softAnimationTime);
+                }
                 tvEmoji.setText(emojiStr);
-
-                editText.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //TODO 需要延迟设置windowSoftInputMode||setVisibility(GONE);
-                        setVisibility(GONE);
-                    }
-                }, 50);
-                appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//                appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 break;
         }
     }
 
 
     public void showSoftKeyBord() {
+        appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setVisibility(VISIBLE);
         tvEmoji.setText(emojiStr);
         editText.setFocusable(true);
@@ -230,7 +232,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
             public void run() {
                 getSupportSoftInputHeight();
             }
-        }, 200);
+        }, softAnimationTime);
     }
 
     private void hideSoftKeyBord() {
@@ -392,6 +394,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        //监听物理返回键
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && getVisibility() == VISIBLE) {
             linear_translate.callOnClick();
             return false;
