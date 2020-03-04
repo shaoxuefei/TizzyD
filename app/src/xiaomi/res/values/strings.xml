@@ -1,0 +1,5 @@
+<resources>
+    <string name="title_activity_base_hua_wei">BaseHuaWeiActivity</string>
+
+    <string name="app_name">XiaoMiDemo</string>
+</resources>

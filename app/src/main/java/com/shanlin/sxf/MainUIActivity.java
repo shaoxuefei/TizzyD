@@ -10,13 +10,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +39,7 @@ public class MainUIActivity extends AppCompatActivity {
     MainFragment mainFragment;
 
     private String[] strings = new String[]{"Tab01", "Tab02", "Tab03", "Tab04"};
-    private int[] tabRes = new int[]{R.mipmap.tab01, R.mipmap.tab02, R.mipmap.tab03, R.mipmap.tab04};
+    private int[] tabRes = new int[]{R.mipmap.tab01, R.mipmap.tab02, R.mipmap.tab03, R.mipmap.tab02};
 
     private ViewPagerAdapter viewPagerAdapter;
 

@@ -20,7 +20,7 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
 
-        flavorDimensions "versionCode"
+        flavorDimensions "default"
 
         manifestPlaceholders = [
                 MTA_APPKEY : "AH1YTN5V83SY",
@@ -29,6 +29,7 @@ android {
     }
     //设置渠道
     //Error:All flavors must now belong to a named flavor dimension. Learn more at https://d.android.com/r/tools/flavorDimensions-missing-error-message.html
+    //渠道包---在project创建了同名的马甲包
     productFlavors {
         tencent {
 

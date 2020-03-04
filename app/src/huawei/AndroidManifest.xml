@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name="com.shanlin.sxf.application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/tab02"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/tab02"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.shanlin.sxf.BaseHuaWeiActivity"
+            android:label="@string/title_activity_base_hua_wei"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
