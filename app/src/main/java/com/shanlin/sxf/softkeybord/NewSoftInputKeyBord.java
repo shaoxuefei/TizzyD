@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -62,6 +63,8 @@ public class NewSoftInputKeyBord extends LinearLayout {
     private String textStr = "text";
     AppCompatActivity appCompatActivity;
     private long softAnimationTime = 60;
+    int rootViewVisibleHeight = 0;
+    private boolean softWindowIsShow = false;
 
     public NewSoftInputKeyBord(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -87,65 +90,77 @@ public class NewSoftInputKeyBord extends LinearLayout {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP && editText.isFocusable()) {
-                    if (recycleViewEmoji.isShown()) {
-                        //固定View的高度
-                        lockViewHeight();
-                        //隐藏表情
-                        hideEmojiView();
-                        //显示键盘
-                        showSoftKeyBord();
-                        //释放高度
-                        unLockViewHeight();
-                    } else {
-                        showSoftKeyBord();
-                    }
-                    tvEmoji.setText("emoji");
+                    //固定View的高度
+                    lockViewHeight();
+                    //隐藏表情
+                    //显示键盘
+                    showSoftKeyBord();
+                    unLockViewHeight();
+                    tvEmoji.setText(emojiStr);
+                    editText.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideEmojiView();
+                        }
+                    }, softAnimationTime);
+                    appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 }
                 return false;
             }
         });
+        relativeInput.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("aa", "addOnGlobalLayoutListener");
+                //获取当前根视图在屏幕上显示的大小
+                Rect r = new Rect();
+                appCompatActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+                int visibleHeight = r.height();
+                //根视图显示高度没有变化，可以看作软键盘显示／隐藏状态没有改变
+                if (rootViewVisibleHeight == 0) {
+                    rootViewVisibleHeight = visibleHeight;
+                }
+                if (rootViewVisibleHeight == visibleHeight) {
+                    return;
+                }
+                //根视图显示高度变小超过200，可以看作软键盘显示了
+                if (rootViewVisibleHeight - visibleHeight > 200) {
+                    softWindowIsShow = true;
+                    rootViewVisibleHeight = visibleHeight;
+                    return;
+                }
+
+                //根视图显示高度变大超过200，可以看作软键盘隐藏了
+                if (visibleHeight - rootViewVisibleHeight > 200) {
+                    if (tvEmoji.getText().toString().equals(emojiStr)) {
+                        linear_translate.callOnClick();
+                    }
+                    InputWxHeight.softKeyBordHeight = visibleHeight - rootViewVisibleHeight;
+                    rootViewVisibleHeight = visibleHeight;
+                    softWindowIsShow = false;
+                }
+            }
+        });
+
+
         relativeInput.addOnLayoutChangeListener(new OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (oldBottom == 0) {
-                    bottomY = bottom;
-                }
-                if (oldBottom > bottom) {
-                    //表示软键盘抬出来了
-                    int dexBottom = oldBottom - bottom;
-                } else if (oldBottom < bottom) {
-                    int dexBottom = oldBottom - bottom;
-                }
-                if (oldBottom != 0 && bottom - oldBottom >= screenHeight / 4) {
-//                    dismissSoftView();
-//                    hideEmojiView();
-//                    tvEmoji.setText(emojiStr);
-//                    //隐藏
-//                    editText.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setVisibility(GONE);
-//                        }
-//                    }, 50);
 
-                    linear_translate.callOnClick();
-                }
-                Log.e("aa", "bottomY: " + bottom + "oldBottom Y " + oldBottom);
             }
         });
-    }
-
-    public void dismissSoftView() {
-        hideSoftKeyBord();
     }
 
     @OnClick({R.id.tv_emoji, R.id.tv_send, R.id.linear_translate})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_emoji:
+                if (!DoubleClickUtil.isCommonClick()) {
+                    return;
+                }
                 String tvStr = tvEmoji.getText().toString();
                 if (emojiStr.equals(tvStr)) {
-                    if (softInputIsShow()) {
+                    if (softWindowIsShow) {
                         //固定高度
                         lockViewHeight();
                         //隐藏键盘
@@ -156,12 +171,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
                     } else {
                         showEmojiView();
                     }
-                    editText.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                        }
-                    }, softAnimationTime);
+                    appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     tvEmoji.setText(textStr);
                 } else if (textStr.equals(tvStr)) {
                     appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
@@ -176,9 +186,10 @@ public class NewSoftInputKeyBord extends LinearLayout {
                         @Override
                         public void run() {
                             hideEmojiView();
-                            appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         }
                     }, softAnimationTime);
+                    appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
                 }
                 break;
             case R.id.tv_send:
@@ -189,33 +200,30 @@ public class NewSoftInputKeyBord extends LinearLayout {
                 editText.setText("");
                 break;
             case R.id.linear_translate:
-//                if(softInputIsShow()||recycleViewEmoji.getVisibility()==VISIBLE){
-//                    hideSoftKeyBord();
-//                    hideEmojiView();
-//                    tvEmoji.setText(textStr);
-//                }else {
-//                    setVisibility(GONE);
-//                }
                 hideSoftKeyBord();
+                softWindowIsShow = false;
                 hideEmojiView();
+                unLockViewHeight();
                 if (tvEmoji.getText().equals(textStr)) {
                     setVisibility(GONE);
                 } else {
                     editText.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            //估计这里会影响到 RelativeLayout.addOnLayoutChangeListener()的监听,因为setVisibility为gone后--监听就不走了，oldBottom和bottom没置换
                             setVisibility(GONE);
                         }
                     }, softAnimationTime);
                 }
                 tvEmoji.setText(emojiStr);
-//                appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 break;
         }
     }
 
 
     public void showSoftKeyBord() {
+        Log.e("aa", "showSoftKeyBord");
         appCompatActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setVisibility(VISIBLE);
         tvEmoji.setText(emojiStr);
@@ -226,13 +234,6 @@ public class NewSoftInputKeyBord extends LinearLayout {
         if (inputMethodManager != null) {
             inputMethodManager.showSoftInput(editText, 0);
         }
-        //延迟获取软键盘的高度
-        editText.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getSupportSoftInputHeight();
-            }
-        }, softAnimationTime);
     }
 
     private void hideSoftKeyBord() {
@@ -240,21 +241,13 @@ public class NewSoftInputKeyBord extends LinearLayout {
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         }
+        Log.e("aa", "hideSoftKeyBord");
     }
 
     private void lockViewHeight() {
-        int dexHeight = 0;
-        if (recycleViewEmoji.getLayoutParams().height > 0 && recycleViewEmoji.getLayoutParams().height != getKeyBoardHeight() && softInputIsShow()) {
-            dexHeight = recycleViewEmoji.getLayoutParams().height - getKeyBoardHeight();
-        }
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linear_translate.getLayoutParams();
-        layoutParams.height = linear_translate.getHeight() + dexHeight;
+        layoutParams.height = linear_translate.getHeight();
         layoutParams.weight = 0f;
-    }
-
-    private boolean softInputIsShow() {
-        Log.e("aa", "softHeight:  " + getSupportSoftInputHeight());
-        return getSupportSoftInputHeight() != 0;
     }
 
     private void hideEmojiView() {
@@ -282,8 +275,6 @@ public class NewSoftInputKeyBord extends LinearLayout {
      *
      * @return
      */
-    private float bottomY;
-
     class EmojiAdapter extends RecyclerView.Adapter {
 
         private Context mContext;
@@ -318,48 +309,6 @@ public class NewSoftInputKeyBord extends LinearLayout {
                 super(itemView);
             }
         }
-    }
-
-
-    /**
-     * 获取软件盘的高度
-     *
-     * @return
-     */
-    int screenHeight;
-
-    private int getSupportSoftInputHeight() {
-        Rect r = new Rect();
-        /**
-         * decorView是window中的最顶层view，可以从window中通过getDecorView获取到decorView。
-         * 通过decorView获取到程序显示的区域，包括标题栏，但不包括状态栏。
-         */
-        appCompatActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
-        //获取屏幕的高度
-        screenHeight = appCompatActivity.getWindow().getDecorView().getRootView().getHeight();
-        //计算软件盘的高度
-        int softInputHeight = screenHeight - r.bottom;
-
-        /**
-         * 某些Android版本下，没有显示软键盘时减出来的高度总是144，而不是零，
-         * 这是因为高度是包括了虚拟按键栏的(例如华为系列)，所以在API Level高于20时，
-         * 我们需要减去底部虚拟按键栏的高度（如果有的话）
-         */
-        if (Build.VERSION.SDK_INT >= 20) {
-            // When SDK Level >= 20 (Android L), the softInputHeight will contain the height of softButtonsBar (if has)
-            softInputHeight = softInputHeight - getSoftButtonsBarHeight();
-        }
-
-        if (softInputHeight < 0) {
-            Log.e("aa", "EmotionKeyboard--Warning: value of softInputHeight is below zero!");
-        }
-        //存一份到本地
-        if (softInputHeight > 0 && softInputHeight > screenHeight / 4) {
-            InputWxHeight.softKeyBordHeight = softInputHeight;
-        } else {
-            softInputHeight = 0;
-        }
-        return softInputHeight;
     }
 
     /**
@@ -397,7 +346,7 @@ public class NewSoftInputKeyBord extends LinearLayout {
         //监听物理返回键
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && getVisibility() == VISIBLE) {
             linear_translate.callOnClick();
-            return false;
+            return true;
         }
         Toast.makeText(appCompatActivity, "dispatchKeyEvent", Toast.LENGTH_SHORT).show();
         return super.dispatchKeyEvent(event);

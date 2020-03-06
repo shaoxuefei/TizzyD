@@ -20,7 +20,6 @@ android {
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
 
-        flavorDimensions "default"
 
         manifestPlaceholders = [
                 MTA_APPKEY : "AH1YTN5V83SY",
@@ -31,17 +30,26 @@ android {
     //Error:All flavors must now belong to a named flavor dimension. Learn more at https://d.android.com/r/tools/flavorDimensions-missing-error-message.html
     //渠道包---在project创建了同名的马甲包
     productFlavors {
-        tencent {
+        flavorDimensions "app","dev"//设置两个不同的维度
 
+        tencent {
+            dimension "app"
         }
         xiaomi {
-
+            dimension "app"
         }
         huawei {
-
+            dimension "app"
         }
         kushichang {
+            dimension "app"
+        }
 
+        urltest{
+            dimension "dev"
+        }
+        urlpre{
+            dimension "dev"
         }
     }
     //设置渠道的ID对应的Values值--值也就是上边对应渠道名：tencent\xiaomi\huawei\等
