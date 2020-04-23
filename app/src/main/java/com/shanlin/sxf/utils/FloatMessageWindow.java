@@ -215,9 +215,10 @@ public class FloatMessageWindow implements DiyFloatView.OnItemClickListener {
         intentDelete.putExtra("id", "delete");
         remoteViews.setOnClickPendingIntent(R.id.tv_delete, PendingIntent.getBroadcast(context, 0x13, intentDelete, 0));
 
-
+        notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        String channel_id = "float_window_channel_id";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("channel_id", "channel_name",
+            NotificationChannel channel = new NotificationChannel(channel_id, "float_window_channel_name",
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
@@ -229,10 +230,8 @@ public class FloatMessageWindow implements DiyFloatView.OnItemClickListener {
             mMediaStyle.setShowActionsInCompactView(0, 1, 2);
         }
 
-
-        notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         //TODO message的内容message.getContent()可能是个Json格式包含跳转类型等
-        Notification notification = new NotificationCompat.Builder(context, "1")
+        Notification notification = new NotificationCompat.Builder(context, "channel_id")
                 .setContentTitle("语音播报")
                 .setContentText("科大讯飞科大讯飞科大讯飞科大讯飞科大讯飞科大讯飞")
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -240,7 +239,7 @@ public class FloatMessageWindow implements DiyFloatView.OnItemClickListener {
 //                .setCustomContentView(remoteViews)
 //                .setDefaults(Notification.DEFAULT_VIBRATE)
 //                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setChannelId("1")
+                .setChannelId(channel_id)
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
                 .build();
 

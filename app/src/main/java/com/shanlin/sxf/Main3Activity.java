@@ -3,12 +3,10 @@ package com.shanlin.sxf;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -43,14 +41,16 @@ public class Main3Activity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         density = metrics.density;
 
-        collapsToolLayout = findViewById(R.id.collapsToolLayout);
-        collapsToolLayout.setTitle("Title");
+//        collapsToolLayout = findViewById(R.id.collapsToolLayout);
+//        collapsToolLayout.setTitle("Title");
         appBarlayout = findViewById(R.id.appBarlayout);
         tabLayout = findViewById(R.id.tabLayout);
         btnStr = findViewById(R.id.btnStr);
         appBarlayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Toast.makeText(Main3Activity.this,verticalOffset+"",Toast.LENGTH_SHORT).show();
+                testUtils.toastMsg();
                 /**
                  layout_collapseMode:pin属性已经是默认是隐藏  会在对应的CollapsingToolbarLayout滑动到底部的时候现实出来
                  */
@@ -70,11 +70,14 @@ public class Main3Activity extends AppCompatActivity {
             }
         });
     }
-
+    TestUtils testUtils;
     private void initPageView() {
         viewPager = findViewById(R.id.viewPager);
         PageItemView pageItemView01 = new PageItemView(this);
         PageItemView pageItemView02 = new PageItemView(this);
+        testUtils=new TestUtils();
+        testUtils.setListArray(arrayList);
+        arrayList=new ArrayList<>();
         arrayList.add(pageItemView01);
         arrayList.add(pageItemView02);
         ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter();
@@ -114,6 +117,8 @@ public class Main3Activity extends AppCompatActivity {
 
 
     class ViewpagerAdapter extends PagerAdapter {
+
+
 
         @Override
         public int getCount() {

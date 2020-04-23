@@ -12,16 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/blackColor"
-            android:text="AppBarLayout"
-            android:textColor="@color/white"
-            app:layout_scrollFlags="scroll" />
-
-
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsToolLayout"
             android:layout_width="match_parent"
@@ -30,16 +20,33 @@
             android:visibility="visible"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/iv_toolBar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/colorAccent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:id="@+id/iv_toolBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/fly_icon"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="CollapsingToolbarLayout"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:visibility="visible"
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
@@ -47,23 +54,16 @@
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/colorAccent"
+                    android:layout_height="45dp"
+                    android:background="@color/colorcc23C993"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="ToolBar"
                     android:textColor="@color/blackColor"
                     android:textSize="18sp"
-                    android:visibility="visible"
-                    app:layout_collapseMode="pin" />
+                    android:visibility="visible" />
             </android.support.v7.widget.Toolbar>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="CollapsingToolbarLayout"
-                android:textColor="@color/white" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout

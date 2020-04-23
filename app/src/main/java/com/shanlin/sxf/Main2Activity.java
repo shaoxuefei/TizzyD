@@ -34,13 +34,16 @@ import com.shanlin.sxf.broadcast.MyBroadCastBReceive;
 import com.shanlin.sxf.service.MyIntentService;
 import com.shanlin.sxf.service.MyService;
 
+/**
+ * code_review: 2020:04:23 18:58
+ */
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
     private TextView snackbar_text;
     private TextInputEditText editInputText;
     private EditText editText;
     private TextInputLayout textInputLayout;
     private FloatingActionButton floatButton;
-    private Button collection, intentService, service, broadCast, broadOrderCast, threadButton, handlerThread;
+    private Button collection, intentService, service, broadCast, broadOrderCast, threadButton, btnHandlerThread;
     private MyHandler myHandler;
     private Handler handler;
     private MyRunable myRunable;
@@ -132,7 +135,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         });
         myRunable = new MyRunable();
         myHandler = new MyHandler();
-        handlerThread = (Button) findViewById(R.id.handlerThread);
+        btnHandlerThread = (Button) findViewById(R.id.handlerThread);
         threadButton = (Button) findViewById(R.id.thread);
         broadCast = (Button) findViewById(R.id.broadCast);
         broadOrderCast = (Button) findViewById(R.id.orderBroadCast);
@@ -152,7 +155,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         broadCast.setOnClickListener(this);
         broadOrderCast.setOnClickListener(this);
         threadButton.setOnClickListener(this);
-        handlerThread.setOnClickListener(this);
+        btnHandlerThread.setOnClickListener(this);
         EditText editText = textInputLayout.getEditText();
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -225,12 +228,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    Looper.prepare();
                     Toast.makeText(Main2Activity.this, "Thread", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 }
             });
             thread.start();
             //2.0
-            myHandler.sendEmptyMessage(3);
+//            myHandler.sendEmptyMessage(3);
             //3.0
             //通过Handler2s后开始走这个回调
             handler.postDelayed(myRunable, 2000);
@@ -238,30 +243,34 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             handler.post(myRunable);
         } else if (id == R.id.handlerThread) {
             //HandlerThread的使用-
-            HandlerThread handlerThr = new HandlerThread("HandlerThread");
+            final HandlerThread handlerThr = new HandlerThread("HandlerThread");
             handlerThr.start();//开启线程
-            Looper looper = handlerThr.getLooper();
-            Handler handler = new Handler(looper, new Handler.Callback() {
+            final Handler workHandler = new Handler(handlerThr.getLooper(), new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
                     //没有发送Message  不会走这个回调--而且该Handler是在子线程中创建的--所以其handlerMessage()回调也是在子线程中的回调--handlerMessage()的回调线程是个创建Handler的线程在一起
                     //故 这个回调里也不能更新UI
-                    Log.e("aa", "HandlerThread_Runnable_HandlerMessage");
+                    ///这个是子线程回调
+                    Log.e("aa", "workHandler:------》looper1:" + (handlerThr.getLooper() == Looper.getMainLooper() ? "MainThread" : "Thread"));
+                    //因为其已经创建过Looper.prepare()<--->Looper.loop(),顾Toast可以show;
+                    Toast.makeText(Main2Activity.this, "异步回调", Toast.LENGTH_SHORT).show();
+                    //Only the original thread that created a view hierarchy can touch its views
+//                    btnHandlerThread.setText("thread");
                     return false;
                 }
             });//该Handler就是在子线程中生命的Handler---并且  你不需要Looper.prepare();Looper.loop();
-            handlerThread.setText("upload");
-            if (handler != null) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 子Thread-不能更新UI
-                        //异步请求
-                        Toast.makeText(Main2Activity.this, "异步请求", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            }
+            btnHandlerThread.setText("upload");
+            workHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Looper looper1 = workHandler.getLooper();
+                    Thread thread = Thread.currentThread();
+                    Log.e("aa", "currentThread:" + thread + "-------》looper1:" + looper1.getThread() + "当前线程：" + (looper1 == Looper.getMainLooper() ? "MainThread" : "Thread"));
+                    ///这个是主线程回调不是子线程-可以更新UI
+                    btnHandlerThread.setText("main-thread");
+                }
+            });
+            workHandler.sendEmptyMessage(1);
         }
     }
 
@@ -271,7 +280,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         public void run() {
             //MainThread-更新UI--right
             threadButton.setText("Runnable");
-            Log.e("aa", "MainThread_Runnable");
         }
 
     }

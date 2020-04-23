@@ -33,6 +33,7 @@ import com.shanlin.sxf.gson.GsonActivity;
 import com.shanlin.sxf.paint.PaintActivity;
 import com.shanlin.sxf.picture.PictureActivity;
 import com.shanlin.sxf.service.MyVideoPlayService;
+import com.shanlin.sxf.softkeybord.NewDialogSoftInputKeyActivity;
 import com.shanlin.sxf.softkeybord.NewSoftInputActivity;
 import com.shanlin.sxf.softkeybord.SoftInputChangeActivity;
 import com.shanlin.sxf.utils.FloatMessageWindow;
@@ -109,6 +110,9 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB13").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB14").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB15").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB16").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB17").getEnumName()));
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB18").getEnumName()));
 
 
         EnumBean tab01 = EnumBean.TAB01;
@@ -196,6 +200,18 @@ public class MainFragment extends BaseFragment {
                     case 14:
                         Intent intent16 = new Intent(getContext(), NewSoftInputActivity.class);
                         startActivity(intent16);
+                        break;
+                    case 15:
+                        Intent intent17 = new Intent(getContext(), NewDialogSoftInputKeyActivity.class);
+                        startActivity(intent17);
+                        break;
+                    case 16:
+                        Intent intent18 = new Intent(getContext(), Main3Activity.class);
+                        startActivity(intent18);
+                        break;
+                    case 17:
+                        Intent intent19 = new Intent(getContext(), MainHookActivity.class);
+                        startActivity(intent19);
                         break;
                     default:
                         break;

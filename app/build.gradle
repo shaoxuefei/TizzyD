@@ -30,7 +30,7 @@ android {
     //Error:All flavors must now belong to a named flavor dimension. Learn more at https://d.android.com/r/tools/flavorDimensions-missing-error-message.html
     //渠道包---在project创建了同名的马甲包
     productFlavors {
-        flavorDimensions "app","dev"//设置两个不同的维度
+        flavorDimensions "app", "dev"//设置两个不同的维度
 
         tencent {
             dimension "app"
@@ -45,10 +45,10 @@ android {
             dimension "app"
         }
 
-        urltest{
+        urltest {
             dimension "dev"
         }
-        urlpre{
+        urlpre {
             dimension "dev"
         }
     }

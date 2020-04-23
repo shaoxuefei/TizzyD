@@ -31,15 +31,18 @@ public enum EnumBean {
 
     TAB14(13, "InputWxEmoj"),
 
-    TAB15(14, "NewInput");
+    TAB15(14, "NewInput"),
+    TAB16(15, "NewInputDialog"),
+    TAB17(16, "AppBarLayout"),
+    TAB18(17, "Hook反射");
 
 
     private String enumName;
     private int enumPosition;
 
     EnumBean(int position, String tab01) {
-        enumName = tab01;
         enumPosition = position;
+        enumName = tab01;
     }
 
     @Override
