@@ -3,10 +3,11 @@ package com.shanlin.sxf;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.WebResourceRequest;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,14 +38,13 @@ public class MyWebViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initWebView(webView);
         //http://tg.zhaohaogu.cn/teacher.html
-        webView.loadUrl("http://tg.zhaohaogu.cn/teacher.html");
-
+        webView.loadUrl("http://fanyi.youdao.com/");
 
         tv_reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String date = strings[(int) (Math.random() * 2)];
-                webView.loadUrl("http://192.168.152.156:9000/#/stock/report?group=11&date=" + date);
+                webView.loadUrl("http://fanyi.youdao.com/");
                 tv_reload.setText(date);
             }
         });
@@ -113,26 +113,43 @@ public class MyWebViewActivity extends AppCompatActivity {
 
         //重定向的Url
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String request) {
-            String url = request;
-            return super.shouldOverrideUrlLoading(view, request);
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            //重定向Url-->讲原先的Url-封装转换后显示真正的Url
+            //但是对于一般的Url返回值可能没啥影响，但是如果H5连接内部有重定向功能那么返回值就会有影响了
+            return super.shouldOverrideUrlLoading(view, url);
         }
 
-        //不走
+        //正常重写这个shouldOverrideUrlLoading(WebView view, String request)方法也行
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                String url = request.getUrl().toString();
+//            } else {
+//                String url = request.toString();
+//            }
+//            return super.shouldOverrideUrlLoading(view, request);
+//        }
+
+
+        @Nullable
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                String url = request.getUrl().toString();
-            } else {
-                String url = request.toString();
-            }
-            return super.shouldOverrideUrlLoading(view, request);
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            //拦截Url的请求
+            return super.shouldInterceptRequest(view, url);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             String urle = url;
+        }
+    }
+
+    class WebChromeClient extends android.webkit.WebChromeClient {
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
         }
     }
 

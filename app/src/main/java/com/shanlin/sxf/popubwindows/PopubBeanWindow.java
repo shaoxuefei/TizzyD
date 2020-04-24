@@ -55,20 +55,20 @@ public class PopubBeanWindow extends PopupWindow implements AdapterView.OnItemCl
 //        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         //设置SelectPicPopupWindow弹出窗体的背景
         setBackgroundDrawable(dw);//设置背景使有些版本：点击外部或返回键无法消毁dimiss();
-        //设置点击外部背景部分使其消失
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int bottom = listView.getBottom();
-                int y = (int) event.getY();
-                if(event.getAction()==MotionEvent.ACTION_UP){
-                    if(y>bottom){
-                        dismiss();
-                    }
-                }
-                return true;
-            }
-        });
+//        //设置点击外部背景部分使其消失
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int bottom = listView.getBottom();
+//                int y = (int) event.getY();
+//                if(event.getAction()==MotionEvent.ACTION_UP){
+//                    if(y>bottom){
+//                        dismiss();
+//                    }
+//                }
+//                return true;
+//            }
+//        });
     }
 
     public void setOnItemClickListener(PopOnItemClickListener onItemClickListener){

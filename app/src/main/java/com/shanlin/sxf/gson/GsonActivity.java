@@ -98,20 +98,24 @@ public class GsonActivity extends AppCompatActivity implements View.OnClickListe
 
         ApiModule.getInstance().createOkHttp();
         OkHttpClient httpClient = ApiModule.getInstance().httpClient;
-        Request request = new Request.Builder().url("http://ggservice.sandbox.gofund.com.cn/v1/ft_info/list_myfavor?app_key=GGHvCBMappzQWEg&rows=20&sign=XRiwA4%2F%2BsZD1MCZGzuWCr4Zqv4M%3D%0A&token=447cc8d697984d1d86325a4c17643a2d&page=1&time_stamp=1552286773")
+
+        Request request = new Request.Builder().url("http://fanyi.youdao.com/")
                 .build();
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                String error = e.toString();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
+                final String strResponse = response.toString();
+                //OkHttp直接调用enqueue()方法请求时，返回的回调也是在子线程的、、Retrofit内部的请求Call对象回调是已经做了线程调度的，也就是返回回调时是主线程,,Observable请求时需要先设置请求和放回线程的subscribeOn,observableOn，内部不会处理
+                //runOnUiThread方法就是主线程Handler发送一个Message到主线程的Looper回调,是Activity内部方法
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(GsonActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GsonActivity.this, strResponse, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

@@ -1,7 +1,9 @@
 package com.shanlin.sxf.picture;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,7 +14,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +32,9 @@ import com.zfdang.multiple_images_selector.SelectorSettings;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -88,7 +95,9 @@ public class PictureActivity extends AppCompatActivity {
         tackPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tackCamera();
+                if (checkPermission(Manifest.permission.CAMERA)) {
+                    tackCamera();
+                }
             }
         });
     }
@@ -122,8 +131,12 @@ public class PictureActivity extends AppCompatActivity {
             Log.e("aa", "uri:" + fromFile);//content://media/external/images/media/59032
             File fileFromMediaUri = getFileFromMediaUri(fromFile);
             Log.e("aa", "filePath:" + fileFromMediaUri);///storage/emulated/0/sina/weibo/weibo/img-bafb49589507d91d66c813501806e9c2.jpg
-            ContentResolver contentResolver = getContentResolver();
             try {
+                //两张方式、可以直接Url通过内容提供者获取InputStream\\或者通过内容提供者讲Url提供给外部调用生产正式文件地址路径File,然后File自己转成InputStream的方式
+//                FileInputStream fileInputStream=new FileInputStream(fileFromMediaUri);
+//                Bitmap bitmap1 = BitmapFactory.decodeStream(fileInputStream);
+
+                ContentResolver contentResolver = getContentResolver();
                 InputStream inputStream = contentResolver.openInputStream(fromFile);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -159,9 +172,8 @@ public class PictureActivity extends AppCompatActivity {
 
     //根据Uri查找File文件是否存在
     public File getFileFromMediaUri(Uri uri) {
-
-
         if (uri.getScheme().toString().compareTo("content") == 0) {
+            Log.e("aa","uri:"+uri);
             ContentResolver contentResolver = getContentResolver();
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
             if (cursor != null) {
@@ -170,13 +182,52 @@ public class PictureActivity extends AppCompatActivity {
                 if (columnCount > 0) {
                     String filePath = null;
                     for (int i = 0; i < columnCount; i++) {
+                        //获取的是提供的内容提供者的URL---》然后通过内容提供者解析Url，便利获取该文件的基本信息属性，获取到自己需要的属性_data
                         String columnName = cursor.getColumnName(i);
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:instance_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:duration
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:description
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:picasa_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:latitude
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:orientation
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:height
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:is_drm
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:bucket_display_name
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:owner_package_name
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:volume_name
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:date_modified
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:date_expires
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:_display_name
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:datetaken
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:mime_type
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:_data
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:_hash
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:_size
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:title
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:width
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:longitude
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:is_trashed
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:group_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:document_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:is_pending
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:date_added
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:mini_thumb_magic
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:primary_directory
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:secondary_directory
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:isprivate
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:original_document_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:bucket_id
+                        //2020-04-24 16:35:32.597 12157-12157/com.shanlin.sxf E/aa: columnName:relative_path
+                        Log.e("aa","columnName:"+columnName);
                         switch (columnName) {
                             case "_data":
                                 filePath = cursor.getString(cursor.getColumnIndex("_data"));
                                 break;
                         }
                     }
+                    //内容提供者就是根据提供的内部隐士Url来获取到对应的真正的系统可以提供给外部的文件的链接文件地址文件files
+                    Log.e("aa","filePath："+filePath);
                     cursor.close();
                     if (filePath != null) {
                         return new File(filePath);
@@ -314,4 +365,13 @@ public class PictureActivity extends AppCompatActivity {
         return returnBm;
     }
 
+
+    private boolean checkPermission(String permission) {
+        if (!(ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[]{permission}, 10);
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

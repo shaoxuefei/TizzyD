@@ -72,7 +72,7 @@ public class PicUtils {
         return null;
     }
 
-    //进行智质量压缩
+    //进行质量压缩
     public Bitmap compressQualityPicture(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);//100表示不压缩,质量最好

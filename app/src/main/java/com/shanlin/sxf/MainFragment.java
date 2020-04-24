@@ -40,6 +40,7 @@ import com.shanlin.sxf.utils.FloatMessageWindow;
 import com.tencent.stat.StatService;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -161,7 +162,11 @@ public class MainFragment extends BaseFragment {
 
                         break;
                     case 7:
-
+                        Intent intentWx = new Intent();
+                        intentWx.setClassName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+                        intentWx.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intentWx);
+                        getActivity().overridePendingTransition(R.anim.enter_in_anim, R.anim.insert_stay);
                         break;
                     case 8:
                         Intent intent10 = new Intent(getContext(), MainTouchActivity.class);
@@ -275,12 +280,47 @@ public class MainFragment extends BaseFragment {
     public void requestUrl() {
         String absolutePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/Screenshots";
         File file = new File(absolutePath);
-        File fileName = new File(file, "timg.jpg");
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), fileName);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("multipartFile", fileName.getName(), requestBody);
+        File[] files = file.listFiles();
+        if (files != null && files.length > 0) {
+            //2020-04-24 15:42:57.241 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.Gallery2
+            //2020-04-24 15:42:57.241 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/TencentNews
+            //2020-04-24 15:42:57.241 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/Screenshots
+            //2020-04-24 15:42:57.241 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.sss
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.scid
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.token
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/知乎
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.thumbcache_idx_001
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/华山
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1576914408416.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1576917334337.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1578016499512.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.td-3
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.tdck
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1579871530749.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1579871533372.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1579871535819.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/1584180053752.jpg
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/.thumbnails
+            //2020-04-24 15:42:57.242 21589-21589/com.shanlin.sxf E/aa: ---》/storage/emulated/0/Pictures/timg.jpg
+            for (int i = 0; i < files.length; i++) {
+                File fileChild = files[i];
+                Log.e("aa", "---》" + fileChild.getAbsolutePath().toString());
+                Log.e("aa", "\n");
+            }
+        }
+        File filePic = new File(file, "timg.jpg");
+        if (!filePic.exists()) {
+            try {
+                filePic.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), filePic);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("multipartFile", filePic.getName(), requestBody);
         Map<String, RequestBody> hashMap = new HashMap<>();
-        RequestBody requestBody1 = RequestBody.create(MediaType.parse("application/json"), "");
-        hashMap.put("request", requestBody1);
+        RequestBody requestBodyJson = RequestBody.create(MediaType.parse("application/json"), "{title:'上传图片文件'}");
+        hashMap.put("request", requestBodyJson);
         ApiModule.getInstance()
                 .getApiUrl()
                 .postPic(part, hashMap)
@@ -289,23 +329,16 @@ public class MainFragment extends BaseFragment {
                 .subscribe(new Action1<JsonObject>() {
                     @Override
                     public void call(JsonObject jsonObject) {
-
+                        String responseStr = jsonObject.toString();
+                        Toast.makeText(getContext(), responseStr, Toast.LENGTH_SHORT).show();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-
+                        String errorStr = throwable.toString();
+                        Toast.makeText(getContext(), errorStr, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //子线程startActivity()需要开启个新栈，防止跟主线程activity冲突
-                getActivity().startService(new Intent());//service默认是运行在mainThread 中
-            }
-
-        });
     }
 
     public void turnToPicture() {
