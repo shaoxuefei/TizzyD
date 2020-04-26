@@ -19,39 +19,40 @@ import android.view.View;
  */
 
 public class PaintView extends View {
-    private int screenWidth,screenHeight;
+    private int screenWidth, screenHeight;
     private Bitmap backgroudBitmap;
     private Path path;
     private Paint paint;
-    private float currentX,currentY;
+    private float currentX, currentY;
     private Canvas mCanvas;
-    public PaintView(Context context,int screenWidth,int screenHeight) {
+
+    public PaintView(Context context, int screenWidth, int screenHeight) {
         super(context);
-        this.screenWidth=screenWidth;
-        this.screenHeight=screenHeight;
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
         initPaint();
     }
 
-    private void initPaint(){
-        paint=new Paint();
+    private void initPaint() {
+        paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
-        path=new Path();
-        backgroudBitmap=Bitmap.createBitmap(screenWidth,screenHeight, Bitmap.Config.ARGB_8888);
+        path = new Path();
+        backgroudBitmap = Bitmap.createBitmap(screenWidth, screenHeight, Bitmap.Config.ARGB_8888);
 
     }
-
-
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawBitmap(backgroudBitmap,0,0,null);
-        canvas.drawPath(path,paint);
-        mCanvas=new Canvas(backgroudBitmap);//需要从新new一个画布进行承载Bitmap--以至于你在外部获取bitmap时并不是之前的大白板
-
+        if (mCanvas == null) {
+            //该画布是重新new的一个Bitmap画布;new Canvas()的构造方法---》无参、有参:Bitmap bitmap
+            mCanvas = new Canvas(backgroudBitmap);//需要从新new一个画布进行承载Bitmap--以至于你在外部获取bitmap时并不是之前的大白板
+        }
+        //该canvas是自定义View自己的画布
+        canvas.drawPath(path, paint);
     }
 
     @Override
@@ -59,39 +60,39 @@ public class PaintView extends View {
         float x = event.getX();
         float y = event.getY();
         int action = event.getAction();
-        switch (action){
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
-                currentX=x;
-                currentY=y;
-                path.moveTo(currentX,currentY);
+                currentX = x;
+                currentY = y;
+                path.moveTo(currentX, currentY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                currentX=x;
-                currentY=y;
-                path.quadTo(currentX,currentY,x,y);
+                currentX = x;
+                currentY = y;
+                path.quadTo(currentX, currentY, x, y);
 
                 break;
             case MotionEvent.ACTION_UP:
-                mCanvas.drawPath(path,paint);
+                mCanvas.drawPath(path, paint);
                 break;
         }
         invalidate();
         return true;
     }
 
-    public Bitmap getPathBitmap(float width,float heigth){
+    public Bitmap getPathBitmap(float width, float heigth) {
         int paintWidth = backgroudBitmap.getWidth();
         int paintHeight = backgroudBitmap.getHeight();
-        float dextaW=(float)width/paintWidth;
-        float dextaH=(float) heigth/paintHeight;
-        Matrix matrix=new Matrix();
-        matrix.postScale(dextaW,dextaH);
+        float dextaW = (float) width / paintWidth;
+        float dextaH = (float) heigth / paintHeight;
+        Matrix matrix = new Matrix();
+        matrix.postScale(dextaW, dextaH);
         Bitmap bitmap = Bitmap.createBitmap(backgroudBitmap, 0, 0, paintWidth, paintHeight, matrix, true);
         return bitmap;
     }
 
-    public void cleanCavans(){
-        if(mCanvas!=null) {
+    public void cleanCavans() {
+        if (mCanvas != null) {
             path.reset();
             mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidate();

@@ -133,7 +133,7 @@ public class MainUIActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 0x31) {
+        if (resultCode == RESULT_OK && requestCode == 0x41) {
             if (data != null) {
                 byte[] imageBytes = data.getByteArrayExtra("imageByte");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);

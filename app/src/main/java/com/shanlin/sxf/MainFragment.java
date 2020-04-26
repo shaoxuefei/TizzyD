@@ -269,7 +269,7 @@ public class MainFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PaintActivity.class);
-                startActivityForResult(intent, 0x31);
+                getActivity().startActivityForResult(intent, 0x41);
             }
         });
         linearRoot.addView(contentView);

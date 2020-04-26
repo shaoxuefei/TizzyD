@@ -72,7 +72,7 @@ public class MethodRangeActivity extends AppCompatActivity implements MethodRang
     }
 
     private void initView() {
-        linkedList=new LinkedList<>();
+        linkedList = new LinkedList<>();
         rangePresenter = new MethodRangePresenter(this, this);
         resourceList = new ArrayList<>();
         String url = "http://ww1.sinaimg.cn/large/c82e4122gy1fux9m28xkmj20ev083tgp.jpg";
@@ -175,21 +175,32 @@ public class MethodRangeActivity extends AppCompatActivity implements MethodRang
                 break;
         }
     }
+
     int textNumber = 10;
-    MethodBean methodBean=new MethodBean();
+    String strTxt = "10";
+    MethodBean methodBean = new MethodBean();
+
     private void changeTextNumber() {
-        methodBean.textNum="10";
+        methodBean.textNum = "10";
         changeMethodBean(methodBean);
         changeTextValue(textNumber);
+        changeStrText(strTxt);
 //        Toast.makeText(this, textNumber + "", Toast.LENGTH_SHORT).show();
         Toast.makeText(this, methodBean.textNum + "", Toast.LENGTH_SHORT).show();
     }
+
     //输出不会受影响输出还是10
     private void changeTextValue(int textNumber) {
         textNumber = 20;
     }
+
     //对象改变还是之前的对象输出20
-    private void changeMethodBean(MethodBean methodBean){
-        methodBean.textNum="20";
+    private void changeMethodBean(MethodBean methodBean) {
+        methodBean.textNum = "20";
+    }
+
+    //输出不会受影响输出还是10\跟之前的设置int是相同的
+    private void changeStrText(String strTxt) {
+        strTxt = "20";
     }
 }

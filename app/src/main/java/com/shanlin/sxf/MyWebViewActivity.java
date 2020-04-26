@@ -115,7 +115,7 @@ public class MyWebViewActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             //重定向Url-->讲原先的Url-封装转换后显示真正的Url
-            //但是对于一般的Url返回值可能没啥影响，但是如果H5连接内部有重定向功能那么返回值就会有影响了
+            //但是对于一般的Url返回值可能没啥影响，但是如果H5链接内部有重定向功能的话那么返回值就会有影响了
             return super.shouldOverrideUrlLoading(view, url);
         }
 

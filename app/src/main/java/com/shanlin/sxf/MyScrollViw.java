@@ -26,7 +26,7 @@ public class MyScrollViw extends ScrollView {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean onInterceptTouchEvent = super.onInterceptTouchEvent(ev);
         //false--表示没有拦截
-        return true;
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class MyScrollViw extends ScrollView {
         //scrollView并不是一个单独的View--他是个ViewGroup---所以这里返回true  会消费掉事件down  move----返回false会向下传递  不过会走down事件不会走move事件
         boolean onTouchEvent = super.onTouchEvent(ev);
         Log.e("aa", "onTouchEvent-------------" + onTouchEvent);
-        return true;
+//        return true;
+        return super.onTouchEvent(ev);
     }
 }
