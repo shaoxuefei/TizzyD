@@ -114,7 +114,7 @@ public class MainFragment extends BaseFragment {
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB16").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB17").getEnumName()));
         myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB18").getEnumName()));
-
+        myViewGroup.addView(new MyGroupItemView(getContext(), EnumBean.valueOf("TAB19").getEnumName()));
 
         EnumBean tab01 = EnumBean.TAB01;
         EnumBean enumBean = EnumBean.valueOf("TAB01");
@@ -217,6 +217,10 @@ public class MainFragment extends BaseFragment {
                     case 17:
                         Intent intent19 = new Intent(getContext(), MainHookActivity.class);
                         startActivity(intent19);
+                        break;
+                    case 18:
+                        Intent intent20 = new Intent(getContext(), LuckyYearActivity.class);
+                        startActivity(intent20);
                         break;
                     default:
                         break;

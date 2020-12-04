@@ -34,7 +34,8 @@ public enum EnumBean {
     TAB15(14, "NewInput"),
     TAB16(15, "NewInputDialog"),
     TAB17(16, "AppBarLayout"),
-    TAB18(17, "Hook反射");
+    TAB18(17, "Hook反射"),
+    TAB19(18, "2020-S-E");
 
 
     private String enumName;

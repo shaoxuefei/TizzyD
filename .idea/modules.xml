@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TizzD.iml" filepath="$PROJECT_DIR$/.idea/modules/TizzD.iml" group="TizzD" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TizzD-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TizzD-app.iml" group="TizzD/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/multiple-images-selector/TizzD-multiple-images-selector.iml" filepath="$PROJECT_DIR$/.idea/modules/multiple-images-selector/TizzD-multiple-images-selector.iml" group="TizzD/multiple-images-selector" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" filepath="$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" />
       <module fileurl="file://$PROJECT_DIR$/tizzD.iml" filepath="$PROJECT_DIR$/tizzD.iml" group="tizzD" />
